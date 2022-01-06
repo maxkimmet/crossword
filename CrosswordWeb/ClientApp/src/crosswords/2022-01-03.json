@@ -1,0 +1,900 @@
+{
+  "title": "Test Crossword",
+  "author": "Max Kimmet",
+  "date": "2022-01-02",
+  "height": 9,
+  "width": 9,
+  "grid": [
+    [
+      "C",
+      "I",
+      "S",
+      "T",
+      "#",
+      "I",
+      "D",
+      "E",
+      "A"
+    ],
+    [
+      "A",
+      "R",
+      "I",
+      "L",
+      "#",
+      "N",
+      "E",
+      "S",
+      "T"
+    ],
+    [
+      "C",
+      "I",
+      "G",
+      "A",
+      "R",
+      "C",
+      "A",
+      "S",
+      "E"
+    ],
+    [
+      "A",
+      "S",
+      "H",
+      "#",
+      "E",
+      "A",
+      "R",
+      "#",
+      "#"
+    ],
+    [
+      "O",
+      "H",
+      "#",
+      "Y",
+      "E",
+      "S",
+      "#",
+      "A",
+      "I"
+    ],
+    [
+      "#",
+      "#",
+      "R",
+      "E",
+      "S",
+      "#",
+      "N",
+      "O",
+      "R"
+    ],
+    [
+      "C",
+      "E",
+      "A",
+      "S",
+      "E",
+      "F",
+      "I",
+      "R",
+      "E"
+    ],
+    [
+      "A",
+      "C",
+      "R",
+      "E",
+      "#",
+      "A",
+      "T",
+      "T",
+      "N"
+    ],
+    [
+      "R",
+      "O",
+      "E",
+      "S",
+      "#",
+      "B",
+      "R",
+      "A",
+      "E"
+    ]
+  ],
+  "entries": [
+    {
+      "name": "A1",
+      "word": "CIST",
+      "clue": "Sacred chest",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "A5",
+      "word": "IDEA",
+      "clue": "Notion",
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "A9",
+      "word": "ARIL",
+      "clue": "Seed covering",
+      "cells": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "A10",
+      "word": "NEST",
+      "clue": "Hatchling's home",
+      "cells": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "A11",
+      "word": "CIGARCASE",
+      "clue": "Place for stogies",
+      "cells": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "A13",
+      "word": "ASH",
+      "clue": "Bat wood",
+      "cells": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "A14",
+      "word": "EAR",
+      "clue": "Attention",
+      "cells": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          6
+        ]
+      ]
+    },
+    {
+      "name": "A15",
+      "word": "OH",
+      "clue": "No kidding!",
+      "cells": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "A16",
+      "word": "YES",
+      "clue": "Absolutely!",
+      "cells": [
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "A17",
+      "word": "AI",
+      "clue": "2001 Spielberg sci-fi film",
+      "cells": [
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "A19",
+      "word": "RES",
+      "clue": "In medias ____",
+      "cells": [
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "A20",
+      "word": "NOR",
+      "clue": "Neither's partner",
+      "cells": [
+        [
+          5,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "A21",
+      "word": "CEASEFIRE",
+      "clue": "Truce",
+      "cells": [
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          6,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "A24",
+      "word": "ACRE",
+      "clue": "Land measure",
+      "cells": [
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          7,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "A25",
+      "word": "ATTN",
+      "clue": "Envelope abbr",
+      "cells": [
+        [
+          7,
+          5
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "A26",
+      "word": "ROES",
+      "clue": "Some deer",
+      "cells": [
+        [
+          8,
+          0
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "A27",
+      "word": "BRAE",
+      "clue": "Scottish hillside",
+      "cells": [
+        [
+          8,
+          5
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "D1",
+      "word": "CACAO",
+      "clue": "Chocolate source",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "D2",
+      "word": "IRISH",
+      "clue": "Kind of coffee",
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "D3",
+      "word": "SIGH",
+      "clue": "Sound of relief",
+      "cells": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "D4",
+      "word": "TLA",
+      "clue": "FBI, CIA, or JFK (or 84-Across, for that matter)",
+      "cells": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "D5",
+      "word": "INCAS",
+      "clue": "Ancient Peruvians",
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "D6",
+      "word": "DEAR",
+      "clue": "Letter opener",
+      "cells": [
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          6
+        ]
+      ]
+    },
+    {
+      "name": "D7",
+      "word": "ESS",
+      "clue": "Double curve",
+      "cells": [
+        [
+          0,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "D8",
+      "word": "ATE",
+      "clue": "Consumed",
+      "cells": [
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "D12",
+      "word": "REESE",
+      "clue": "Actress Witherspoon",
+      "cells": [
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "D16",
+      "word": "YESES",
+      "clue": "Affirmatives",
+      "cells": [
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          8,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "D17",
+      "word": "AORTA",
+      "clue": "Main artery",
+      "cells": [
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          8,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "D18",
+      "word": "IRENE",
+      "clue": "Peace goddess",
+      "cells": [
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "D19",
+      "word": "RARE",
+      "clue": "Steak order",
+      "cells": [
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          8,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "D20",
+      "word": "NITR",
+      "clue": "Prefix for compounds of element 7",
+      "cells": [
+        [
+          5,
+          6
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          8,
+          6
+        ]
+      ]
+    },
+    {
+      "name": "D21",
+      "word": "CAR",
+      "clue": "Train unit",
+      "cells": [
+        [
+          6,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "D22",
+      "word": "ECO",
+      "clue": "Author Umberto",
+      "cells": [
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "D23",
+      "word": "FAB",
+      "clue": "Groovy",
+      "cells": [
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ]
+      ]
+    }
+  ]
+}

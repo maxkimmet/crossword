@@ -1,0 +1,140 @@
+{
+  "title": "Test Crossword",
+  "author": "Max Kimmet",
+  "date": "2022-01-01",
+  "height": 3,
+  "width": 3,
+  "grid": [
+    [
+      "E",
+      "R",
+      "A"
+    ],
+    [
+      "R",
+      "O",
+      "T"
+    ],
+    [
+      "E",
+      "E",
+      "E"
+    ]
+  ],
+  "entries": [
+    {
+      "name": "A1",
+      "word": "ERA",
+      "clue": "Historical period",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "A4",
+      "word": "ROT",
+      "clue": "Go bad",
+      "cells": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "A5",
+      "word": "EEE",
+      "clue": "Shoe width",
+      "cells": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "D1",
+      "word": "ERE",
+      "clue": "Before",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "D2",
+      "word": "ROE",
+      "clue": "Caviar",
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "D3",
+      "word": "ATE",
+      "clue": "Consumed",
+      "cells": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    }
+  ]
+}

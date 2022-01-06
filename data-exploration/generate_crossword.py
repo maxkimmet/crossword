@@ -1,0 +1,51 @@
+# %%
+import pandas as pd
+
+from crossword_helper import Crossword
+
+# %% Import clues
+df_clues = pd.read_csv('data/sorted_clues.csv')
+
+# %% Filter answers based on last year used
+df_clues = df_clues[df_clues.max_year >= 2000]
+
+# %% Filter answers based on answer length
+df_clues['answer_length'] = df_clues.answer.apply(lambda x: len(x))
+df_clues = df_clues[(df_clues.answer_length >= 2) & (df_clues.answer_length <= 15)]
+
+# %% Sort distinct answers by frequency (ignoring different clues)
+df_answers = df_clues.groupby('answer') \
+    .agg(
+        answer_count=('clue_count', 'sum'),
+        answer_length=('answer_length', 'max')
+    ) \
+    .reset_index() \
+    .sort_values('answer_count', ascending=False) \
+    .reset_index()
+df_answers.drop('index', axis=1, inplace=True)
+
+# %% Drop answers with only one use
+df_answers = df_answers[df_answers.answer_count >= 2]
+
+# %% Filter clues based on pool of answers
+df_clues = df_clues[df_clues.answer.isin(df_answers.answer)]
+
+# %% Assign most common clue to each answer
+df_clues = df_clues.sort_values('clue_count', ascending=False).reset_index()
+df_clues.drop('index', axis=1, inplace=True)
+df_clues = df_clues.groupby('answer') \
+    .agg(
+        clue=('clue', 'first'),
+        answer_count=('clue_count', 'sum')
+    ) \
+    .reset_index() \
+    .sort_values('answer_count', ascending=False) \
+    .reset_index()
+df_clues = df_clues[['answer', 'clue']]
+clues = {row[0]: row[1] for row in df_clues.values}
+
+# %% Generate crossword
+crossword = Crossword("input.json", clues)
+crossword.generate("crosswords/2022-01-02.json")
+
+# %%

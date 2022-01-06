@@ -1,0 +1,196 @@
+{
+  "title": "Test Crossword",
+  "author": "Max Kimmet",
+  "date": "2021-12-14",
+  "height": 3,
+  "width": 6,
+  "grid": [
+    [
+      "E",
+      "S",
+      "T",
+      "A",
+      "T",
+      "E"
+    ],
+    [
+      "#",
+      "P",
+      "E",
+      "L",
+      "E",
+      "#"
+    ],
+    [
+      "P",
+      "A",
+      "E",
+      "A",
+      "N",
+      "S"
+    ]
+  ],
+  "entries": [
+    {
+      "name": "A1",
+      "word": "ESTATE",
+      "clue": "Property",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "A6",
+      "word": "PELE",
+      "clue": "Soccer great",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "A7",
+      "word": "PAEANS",
+      "clue": "Songs of praise",
+      "cells": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "D2",
+      "word": "SPA",
+      "clue": "Health resort",
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "D3",
+      "word": "TEE",
+      "clue": "Golf peg",
+      "cells": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "D4",
+      "word": "ALA",
+      "clue": "In the style of",
+      "cells": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "D5",
+      "word": "TEN",
+      "clue": "Half a score",
+      "cells": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    }
+  ]
+}
