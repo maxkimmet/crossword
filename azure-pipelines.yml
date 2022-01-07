@@ -20,3 +20,10 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   workingDirectory: CrosswordWeb/
   displayName: 'dotnet build $(buildConfiguration)'
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1 (cc0e15dc-e509-4f92-93ad-e22772a67d11)'
+    appType: 'webApp'
+    appName: 'crossword-app-dotnet-win'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
