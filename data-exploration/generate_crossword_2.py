@@ -51,7 +51,7 @@ for row in df_clues.values:
     })
 
 # %% Generate crossword
-crossword = Crossword("inputs/13x13-0.json", clues)
-crossword.generate("crosswords/2022-01-04(1).json")
+crossword = Crossword("inputs/15x15-1.json", clues)
+crossword.generate("crosswords/2022-01-09.json")
 
 # %%

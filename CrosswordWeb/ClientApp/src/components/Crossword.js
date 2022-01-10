@@ -1,9 +1,9 @@
-// TODO: Add auto-scrolling, <li> tab-in, arrow key movement, checker?
+// TODO: Add checker
 
 import React from 'react';
 import './Crossword.css';
 
-import XWORD from '../crosswords/2022-01-04(1).json'
+import XWORD from '../crosswords/2022-01-09.json'
 
 function Header(props) {
   return (
@@ -58,7 +58,7 @@ function Cell(props) {
         value={value}
         onKeyDown={props.onKeyDown}
         onClick={props.onClick}
-        ref={props.annotation === "1" ? props.inputRef : null}
+        ref={props.annotation === "01" ? props.inputRef : null}
       />
     </td>
   );
@@ -93,8 +93,13 @@ function Grid(props) {
 }
 
 function Clue(props) {
+  // Scroll to clue if active
+  const element = document.getElementById(props.name);
+  (element && props.isActiveEntry) && element.scrollIntoView({behavior: "smooth", block: "center"});
+
   return (
     <li
+      id={props.name}
       className={"clue" + (props.isActiveEntry ? " active-entry" : "")}
       onClick={props.onClick}
     >
@@ -174,25 +179,33 @@ export class Crossword extends React.Component {
   }
 
   goToEntry(name) {
-    let activeEntryIndex = 0;
+    let activeEntryIndex = -1;
     for (let i = 0; i < XWORD.entries.length; i++) {
       if (XWORD.entries[i].name === name) {
         activeEntryIndex = i;
         break;
       }
     }
+
+    // Return false if entry isn't valid
+    if (activeEntryIndex === -1) {
+      return false;
+    }
+
     this.setState({
       activeEntryIndex: activeEntryIndex,
       activeCellIndex: 0,
     });
     this.inputElement.current.focus();
+
+    return true;
   }
 
   goToCell(row, col) {
     const possibleEntries = XWORD.entries.filter(entry => includesArray(entry.cells, [row, col]));
 
-    // Return if invalid cell
-    if (possibleEntries.length === 0) return;
+    // Return false if invalid cell
+    if (possibleEntries.length === 0) return false;
 
     let activeEntry = XWORD.entries[this.state.activeEntryIndex];
     const activeRow = activeEntry.cells[this.state.activeCellIndex][0];
@@ -216,6 +229,8 @@ export class Crossword extends React.Component {
       activeEntryIndex: activeEntryIndex,
       activeCellIndex: activeCellIndex,
     });
+
+    return true;
   }
 
   handleKeyDown(event) {
@@ -223,18 +238,22 @@ export class Crossword extends React.Component {
     // Return if puzzle is complete
     if (this.state.isComplete) return;
 
-    const value = event.key.toUpperCase();
-
+    // Get state
     let grid = this.state.grid;
     let activeEntryIndex = this.state.activeEntryIndex;
     let activeCellIndex = this.state.activeCellIndex;
     let activeEntry = XWORD.entries[this.state.activeEntryIndex];
     let activeRow = activeEntry.cells[activeCellIndex][0];
     let activeCol = activeEntry.cells[activeCellIndex][1];
-    let updateState = true;
 
-    if (value.match(/^[A-Z]$/)) {  // Enter alphabetic character and move to next cell
+    let updateCells = false;
+    let preventDefault = true;
+    const value = event.key.toUpperCase();
 
+    // Handle keypresses that update cell value
+    if (value.match(/^[A-Z]$/)) {
+      // Enter alphabetic character and move to next cell
+      updateCells = true;
       if (!this.state.isInProgress) {
         this.setState({ isInProgress: true });
         this.timerID = setInterval(
@@ -242,7 +261,6 @@ export class Crossword extends React.Component {
           1000
         );
       }
-
       grid[activeRow][activeCol] = value;
       let nextCellIndex = activeCellIndex + 1;
       if (nextCellIndex < activeEntry.cells.length) {
@@ -252,7 +270,9 @@ export class Crossword extends React.Component {
         activeEntry = XWORD.entries[activeEntryIndex];
         activeCellIndex = 0;
       }
-    } else if (value === "BACKSPACE") {  // Remove character and move to previous cell
+    } else if (value === "BACKSPACE") {
+      // Remove character and move to previous cell
+      updateCells = true;
       grid[activeRow][activeCol] = '';
       let nextCellIndex = activeCellIndex - 1;
       if (nextCellIndex >= 0) {
@@ -263,18 +283,41 @@ export class Crossword extends React.Component {
         activeEntry = XWORD.entries[activeEntryIndex];
         activeCellIndex = activeEntry.cells.length - 1;
       }
-    } else if (value === "TAB") {  // Move to beginning of next entry
-      event.preventDefault();
+    } else if (value === "TAB") {
+      // Move to beginning of next entry
       activeEntryIndex = (activeEntryIndex + 1) % XWORD.entries.length;
       activeEntry = XWORD.entries[activeEntryIndex];
-      activeCellIndex = 0;
-    } else if (value === " ") {  // Change orientation
-      event.preventDefault();
+      this.goToEntry(activeEntry.name);
+    } else if (value === " ") {
+      // Change orientation
       this.goToCell(activeRow, activeCol);
-      updateState = false;
+    } else if (value === "ARROWUP") {
+      // Move to next valid cell above (or wrap around)
+      do {
+        activeRow = ((activeRow - 1) % XWORD.height + XWORD.height) % XWORD.height;
+      } while (!this.goToCell(activeRow, activeCol));
+    } else if (value === "ARROWDOWN") {
+      // Move to next valid cell below (or wrap around)
+      do {
+        activeRow = (activeRow + 1) % XWORD.height % XWORD.height;
+      } while (!this.goToCell(activeRow, activeCol));
+    } else if (value === "ARROWLEFT") {
+      // Move to next valid cell to the left (or wrap around)
+      do {
+        activeCol = ((activeCol - 1) % XWORD.width + XWORD.width) % XWORD.width;
+      } while (!this.goToCell(activeRow, activeCol));
+    } else if (value === "ARROWRIGHT") {
+      // Move to next valid cell to the right (or wrap around)
+      do {
+        activeCol = (activeCol + 1) % XWORD.width % XWORD.width;
+      } while (!this.goToCell(activeRow, activeCol));
+    } else {
+      // Don't prevent default event of unhandled keypresses
+      preventDefault = false;
     }
+    preventDefault && event.preventDefault();
 
-    if (updateState) {
+    if (updateCells) {
       this.setState({
         grid: grid,
         activeEntryIndex: activeEntryIndex,
@@ -282,11 +325,9 @@ export class Crossword extends React.Component {
       });
     }
 
-    // TODO: Indicate when crossword is complete
+    // Check if crossword is complete
     if (JSON.stringify(this.state.grid) === JSON.stringify(XWORD.grid)) {
-      // Stop timer
-      clearInterval(this.timerID);
-
+      clearInterval(this.timerID);  // Stop timer
       this.setState({
         isComplete: true,
         showWinModal: true,

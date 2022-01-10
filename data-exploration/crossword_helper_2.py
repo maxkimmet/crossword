@@ -61,7 +61,7 @@ class Crossword:
                     while j + length < self.width and self.grid[i][j + length] != '#':
                         length += 1
                     if length > 1:
-                        self.entries.append(Entry(f"A{clue_enum}", (i, j), length, clues))
+                        self.entries.append(Entry(f"A{str(clue_enum).zfill(2)}", (i, j), length, clues))
                         cell_starts_clue = True
 
                 # Check if cell starts down entry
@@ -70,7 +70,7 @@ class Crossword:
                     while i + length < self.height and self.grid[i + length][j] != '#':
                         length += 1
                     if length > 1:
-                        self.entries.append(Entry(f"D{clue_enum}", (i, j), length, clues))
+                        self.entries.append(Entry(f"D{str(clue_enum).zfill(2)}", (i, j), length, clues))
                         cell_starts_clue = True
 
                 if cell_starts_clue:

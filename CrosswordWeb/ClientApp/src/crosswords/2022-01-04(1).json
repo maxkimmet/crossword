@@ -203,7 +203,7 @@
   ],
   "entries": [
     {
-      "name": "A1",
+      "name": "A01",
       "word": "SOLE",
       "clue": "One and only",
       "cells": [
@@ -226,7 +226,7 @@
       ]
     },
     {
-      "name": "A5",
+      "name": "A05",
       "word": "SHR",
       "clue": "Stock unit abbreviation",
       "cells": [
@@ -245,7 +245,7 @@
       ]
     },
     {
-      "name": "A8",
+      "name": "A08",
       "word": "EDEN",
       "clue": "Paradise",
       "cells": [
@@ -1003,7 +1003,7 @@
       ]
     },
     {
-      "name": "D1",
+      "name": "D01",
       "word": "SOMEAN",
       "clue": "Not nice!",
       "cells": [
@@ -1034,7 +1034,7 @@
       ]
     },
     {
-      "name": "D2",
+      "name": "D02",
       "word": "ODESSA",
       "clue": "Black Sea port",
       "cells": [
@@ -1065,7 +1065,7 @@
       ]
     },
     {
-      "name": "D3",
+      "name": "D03",
       "word": "LOSETO",
       "clue": "Be defeated by",
       "cells": [
@@ -1096,7 +1096,7 @@
       ]
     },
     {
-      "name": "D4",
+      "name": "D04",
       "word": "ERA",
       "clue": "Historical period",
       "cells": [
@@ -1115,7 +1115,7 @@
       ]
     },
     {
-      "name": "D5",
+      "name": "D05",
       "word": "SOFTC",
       "clue": "The fourth letter of \"cancel,\" but not the first",
       "cells": [
@@ -1142,7 +1142,7 @@
       ]
     },
     {
-      "name": "D6",
+      "name": "D06",
       "word": "HOHOHO",
       "clue": "Holiday cheer?",
       "cells": [
@@ -1173,7 +1173,7 @@
       ]
     },
     {
-      "name": "D7",
+      "name": "D07",
       "word": "ROAMING",
       "clue": "Like some cell phone charges",
       "cells": [
@@ -1208,7 +1208,7 @@
       ]
     },
     {
-      "name": "D8",
+      "name": "D08",
       "word": "ERECT",
       "clue": "Put up",
       "cells": [
@@ -1235,7 +1235,7 @@
       ]
     },
     {
-      "name": "D9",
+      "name": "D09",
       "word": "DERAIL",
       "clue": "Go off track",
       "cells": [
