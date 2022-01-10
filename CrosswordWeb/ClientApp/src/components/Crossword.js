@@ -234,11 +234,6 @@ export class Crossword extends React.Component {
   }
 
   handleKeyDown(event) {
-
-    // Return if puzzle is complete
-    if (this.state.isComplete) return;
-
-    // Get state
     let grid = this.state.grid;
     let activeEntryIndex = this.state.activeEntryIndex;
     let activeCellIndex = this.state.activeCellIndex;
@@ -246,22 +241,20 @@ export class Crossword extends React.Component {
     let activeRow = activeEntry.cells[activeCellIndex][0];
     let activeCol = activeEntry.cells[activeCellIndex][1];
 
-    let updateCells = false;
     let preventDefault = true;
     const value = event.key.toUpperCase();
 
-    // Handle keypresses that update cell value
+    // Handle keypresses
     if (value.match(/^[A-Z]$/)) {
-      // Enter alphabetic character and move to next cell
-      updateCells = true;
-      if (!this.state.isInProgress) {
+      // Enter alphabetic character and move to next cell (return if puzzle complete)
+      if (!this.state.isInProgress) {  // Start timer when first character entered
         this.setState({ isInProgress: true });
         this.timerID = setInterval(
           () => this.tick(),
           1000
         );
       }
-      grid[activeRow][activeCol] = value;
+      if (!this.state.isComplete) grid[activeRow][activeCol] = value;
       let nextCellIndex = activeCellIndex + 1;
       if (nextCellIndex < activeEntry.cells.length) {
         activeCellIndex = nextCellIndex;
@@ -270,10 +263,14 @@ export class Crossword extends React.Component {
         activeEntry = XWORD.entries[activeEntryIndex];
         activeCellIndex = 0;
       }
+      this.setState({
+        grid: grid,
+        activeEntryIndex: activeEntryIndex,
+        activeCellIndex: activeCellIndex,
+      });
     } else if (value === "BACKSPACE") {
       // Remove character and move to previous cell
-      updateCells = true;
-      grid[activeRow][activeCol] = '';
+      if (!this.state.isComplete) grid[activeRow][activeCol] = '';
       let nextCellIndex = activeCellIndex - 1;
       if (nextCellIndex >= 0) {
         activeCellIndex = nextCellIndex;
@@ -283,6 +280,11 @@ export class Crossword extends React.Component {
         activeEntry = XWORD.entries[activeEntryIndex];
         activeCellIndex = activeEntry.cells.length - 1;
       }
+      this.setState({
+        grid: grid,
+        activeEntryIndex: activeEntryIndex,
+        activeCellIndex: activeCellIndex,
+      });
     } else if (value === "TAB") {
       // Move to beginning of next entry
       activeEntryIndex = (activeEntryIndex + 1) % XWORD.entries.length;
@@ -317,16 +319,8 @@ export class Crossword extends React.Component {
     }
     preventDefault && event.preventDefault();
 
-    if (updateCells) {
-      this.setState({
-        grid: grid,
-        activeEntryIndex: activeEntryIndex,
-        activeCellIndex: activeCellIndex,
-      });
-    }
-
-    // Check if crossword is complete
-    if (JSON.stringify(this.state.grid) === JSON.stringify(XWORD.grid)) {
+    // Check if crossword is complete for first time
+    if (!this.state.isComplete && JSON.stringify(this.state.grid) === JSON.stringify(XWORD.grid)) {
       clearInterval(this.timerID);  // Stop timer
       this.setState({
         isComplete: true,
