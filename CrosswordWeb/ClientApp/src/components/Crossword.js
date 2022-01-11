@@ -35,6 +35,14 @@ function WinModal(props) {
   )
 }
 
+function ErrorButton(props) {
+  return (
+    <div className="center">
+      <button className="error-button" onClick={props.onClick}>Show Errors</button>
+    </div>
+  )
+}
+
 function Cell(props) {
   let classes = "cell";
   let value = props.value;
@@ -48,16 +56,18 @@ function Cell(props) {
   if (props.activeCell) {
     classes += " active-cell";
   }
+  if (props.errorCell) {
+    classes += " error-cell"
+  }
 
   return (
-    <td>
+    <td onClick={props.onClick}>
       <span>{props.annotation}</span>
       <input
         className={classes}
         readOnly={true}
         value={value}
         onKeyDown={props.onKeyDown}
-        onClick={props.onClick}
         ref={props.annotation === "01" ? props.inputRef : null}
       />
     </td>
@@ -76,6 +86,7 @@ function Grid(props) {
                 <Cell
                   key={row * props.height + col}
                   value={cell}
+                  errorCell={props.errors[row][col]}
                   activeEntry={includesArray(props.activeEntry.cells, [row, col])}
                   activeCell={row === props.activeRow && col === props.activeCol}
                   annotation={props.startCells[[row, col]]}
@@ -95,7 +106,7 @@ function Grid(props) {
 function Clue(props) {
   // Scroll to clue if active
   const element = document.getElementById(props.name);
-  (element && props.isActiveEntry) && element.scrollIntoView({behavior: "smooth", block: "center"});
+  (element && props.isActiveEntry) && element.scrollIntoView({ behavior: "smooth", block: "center" });
 
   return (
     <li
@@ -137,6 +148,8 @@ export class Crossword extends React.Component {
     super(props);
     this.inputElement = React.createRef();
     this.solution = XWORD.grid;
+
+    // Map of starting cell indices to number of corresponding clue
     this.startCells = {};
     XWORD.entries.map(entry => (
       this.startCells[entry.cells[0]] = entry.name.substring(1)
@@ -154,9 +167,13 @@ export class Crossword extends React.Component {
       )),
       activeEntryIndex: 0,
       activeCellIndex: 0,
+      errors: Array.from({ length: XWORD.height }, () =>
+        Array.from({ length: XWORD.width }, () => false)
+      ),
     }
 
     this.toggleWinModal = this.toggleWinModal.bind(this);
+    this.runErrorCheck = this.runErrorCheck.bind(this);
     this.goToEntry = this.goToEntry.bind(this);
     this.goToCell = this.goToCell.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -176,6 +193,18 @@ export class Crossword extends React.Component {
     this.setState(prevState => ({
       showWinModal: !prevState.showWinModal,
     }));
+  }
+
+  runErrorCheck() {
+    let errors = this.state.errors;
+    for (let i = 0; i < XWORD.height; i++) {
+      for (let j = 0; j < XWORD.width; j++) {
+        errors[i][j] = (this.state.grid[i][j] !== this.solution[i][j]);
+      }
+    }
+    this.setState({
+      errors: errors,
+    });
   }
 
   goToEntry(name) {
@@ -235,6 +264,7 @@ export class Crossword extends React.Component {
 
   handleKeyDown(event) {
     let grid = this.state.grid;
+    let errors = this.state.errors;
     let activeEntryIndex = this.state.activeEntryIndex;
     let activeCellIndex = this.state.activeCellIndex;
     let activeEntry = XWORD.entries[this.state.activeEntryIndex];
@@ -254,7 +284,10 @@ export class Crossword extends React.Component {
           1000
         );
       }
-      if (!this.state.isComplete) grid[activeRow][activeCol] = value;
+      if (!this.state.isComplete) {
+        grid[activeRow][activeCol] = value;
+        errors[activeRow][activeCol] = false;
+      }
       let nextCellIndex = activeCellIndex + 1;
       if (nextCellIndex < activeEntry.cells.length) {
         activeCellIndex = nextCellIndex;
@@ -265,12 +298,13 @@ export class Crossword extends React.Component {
       }
       this.setState({
         grid: grid,
+        errors: errors,
         activeEntryIndex: activeEntryIndex,
         activeCellIndex: activeCellIndex,
       });
     } else if (value === "BACKSPACE") {
       // Remove character and move to previous cell
-      if (!this.state.isComplete) grid[activeRow][activeCol] = '';
+      if (!this.state.isComplete) { grid[activeRow][activeCol] = ''; }
       let nextCellIndex = activeCellIndex - 1;
       if (nextCellIndex >= 0) {
         activeCellIndex = nextCellIndex;
@@ -317,7 +351,7 @@ export class Crossword extends React.Component {
       // Don't prevent default event of unhandled keypresses
       preventDefault = false;
     }
-    preventDefault && event.preventDefault();
+    if (preventDefault) { event.preventDefault(); }
 
     // Check if crossword is complete for first time
     if (!this.state.isComplete && JSON.stringify(this.state.grid) === JSON.stringify(XWORD.grid)) {
@@ -346,12 +380,11 @@ export class Crossword extends React.Component {
             author={XWORD.author}
             date={XWORD.date}
           />
-          <Timer
-            time={this.state.time}
-          />
+          <Timer time={this.state.time} />
           <div className="flex-row">
             <Grid
               grid={this.state.grid}
+              errors={this.state.errors}
               startCells={this.startCells}
               height={XWORD.height}
               width={XWORD.width}
@@ -393,6 +426,7 @@ export class Crossword extends React.Component {
               </tbody>
             </table>
           </div>
+          <ErrorButton onClick={this.runErrorCheck} />
         </div>
       </div>
     );
