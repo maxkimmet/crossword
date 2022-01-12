@@ -1,5 +1,7 @@
 # %%
 import pandas as pd
+import time
+from datetime import timedelta
 
 from crossword_helper_2 import Crossword
 
@@ -51,7 +53,9 @@ for row in df_clues.values:
     })
 
 # %% Generate crossword
-crossword = Crossword("inputs/15x15-1.json", clues)
-crossword.generate("crosswords/2022-01-09.json")
+start_time = time.time()
+crossword = Crossword("inputs/15x15-0.json", clues)
+crossword.generate("crosswords/2022-01-11.json")
+print(f"Crossword generated in {timedelta(seconds=int(time.time()-start_time))}")
 
 # %%

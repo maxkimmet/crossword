@@ -1,9 +1,7 @@
-// TODO: Add checker
-
 import React from 'react';
 import './Crossword.css';
 
-import XWORD from '../crosswords/2022-01-09.json'
+import XWORD from '../crosswords/2022-01-11.json'
 
 function Header(props) {
   return (
@@ -77,7 +75,7 @@ function Cell(props) {
 function Grid(props) {
   return (
     <div>
-      <span>{`${props.activeEntry.name}. ${props.activeEntry.clue}`}</span>
+      <span><b>{`${props.activeEntry.name}. ${props.activeEntry.clue}`}</b></span>
       <table className="grid">
         <tbody>
           {props.grid.map((cells, row) => (

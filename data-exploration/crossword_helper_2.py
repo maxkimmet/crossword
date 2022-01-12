@@ -1,8 +1,10 @@
+from __future__ import annotations
+from typing import Optional
+
 from dataclasses import dataclass
 import json
 
 from numpy import inf
-
 
 class Crossword:
     """Used to generate a crossword based on a config file and list of possible clues.
@@ -82,10 +84,9 @@ class Crossword:
                 if entry1 != entry2:
                     entry1.update_overlap(entry2)
 
-    # TODO: Format as wrapper for generate function
     def generate(self, out_file=""):
         # Generate crossword
-        if not self._generate():
+        if self._generate() is not None:
             Exception("Crossword could not be generated with word list")
 
         # Update clues for entries and fill in grid
@@ -97,21 +98,30 @@ class Crossword:
         if out_file:
             self.export(out_file)
 
-    def _generate(self, used_words=[], print_grid=True) -> bool:
-        # TODO: Choose entries with least possible words
-        #       Of those, choose entry with most intersections with remaining words
+    def _generate(self, used_words=[], print_grid=True) -> Optional[Entry]:
+        # Get entries not yet assigned a clue
         possible_entries = [e for e in self.entries if not e.clue]
 
-        # Return if crossword is complete
+        # Return None if crossword is complete
         if len(possible_entries) == 0:
-            return True
+            return None
 
         # Find entry with least possible words and most intersections
+        # TODO: Prioritize maximum remaining intersections over minimum possible words?
         entry = None
         clue_count = inf
         intersection_count = 0
         for e in possible_entries:
             e.update_constraints(used_words)
+            # if e.clues_remaining() == 0:
+            #     return e
+            # elif e.open_intersections() > intersection_count:
+            #     entry = e
+            #     clue_count = e.clues_remaining()
+            #     intersection_count = e.open_intersections()
+            # elif e.open_intersections() == intersection_count and e.clues_remaining() < clue_count:
+            #     entry = e
+            #     intersection_count = e.open_intersections()
             if e.clues_remaining() < clue_count:
                 entry = e
                 clue_count = e.clues_remaining()
@@ -120,10 +130,8 @@ class Crossword:
                 entry = e
                 intersection_count = e.open_intersections()
 
-        # TODO: Get list of possible words ranked best to worst
-
         # Try generating puzzle with word assigned to entry
-        for clue in entry.constrained_clues:
+        for clue in entry.sorted_clues():
             # Assign word to entry and remove from possible words
             entry.clue = clue
             used_words.append(clue.answer)
@@ -137,15 +145,21 @@ class Crossword:
                         local_grid[row][col] = local_entry.clue.answer[i]
                 print("\n" + "\n".join(["".join(row) for row in local_grid]))
 
-            # Generate rest of puzzle
-            if (self._generate(used_words, print_grid)):  # Return true if word leads to solved puzzle
-                return True
-            else:
-                entry.clue = None
-                used_words = used_words[:-1]
+            # Generate rest of puzzle and return None if successful
+            failed_entry = self._generate(used_words, print_grid)
+            if failed_entry is None:
+                return None
 
-        # Return False if no words fit entry based on current crossword configuration
-        return False
+            # Remove clue from entry and answer from used words
+            entry.clue = None
+            used_words = used_words[:-1]
+
+            # Continue backtracking if entry isn't constrained by failing entry
+            if failed_entry not in entry.overlaps:
+                return failed_entry
+
+        # Return failed entry if no words result in a completed crossword
+        return entry
 
     def export(self, out_file : str):
         output = {
@@ -222,6 +236,10 @@ class Entry:
             if word[index] != letter:
                 return False
         return True
+
+    def sorted_clues(self) -> list[Clue]:
+        # TODO: Rank clues best to worst based on maximum constraint to intersecting entries
+        return self.constrained_clues
 
     def clues_remaining(self) -> int:
         return len(self.constrained_clues)
