@@ -104,7 +104,11 @@ function Grid(props) {
 function Clue(props) {
   // Scroll to clue if active
   const element = document.getElementById(props.name);
-  (element && props.isActiveEntry) && element.scrollIntoView({ behavior: "smooth", block: "center" });
+  const parent = document.getElementById(props.parent);
+  if (element && props.isActiveEntry) {
+    const offset = element.offsetTop - 0.5 * parent.offsetHeight + 32;
+    parent.scroll({top: offset, behavior: "smooth"});
+  }
 
   return (
     <li
@@ -118,9 +122,11 @@ function Clue(props) {
 }
 
 function ClueList(props) {
+  const clueListId = `${props.orientation}-clue-list`;
+
   return (
     <div>
-      <nav className="clue-list-nav">
+      <nav className="clue-list-nav" id={clueListId}>
         <ul className="clue-list">
           {props.entries
             .filter(entry => (entry.name[0] === props.orientation))
@@ -129,6 +135,7 @@ function ClueList(props) {
                 key={entry.name}
                 name={entry.name}
                 clue={entry.clue}
+                parent={clueListId}
                 isActiveEntry={props.activeEntry.name === entry.name}
                 onClick={() => props.onClick(entry.name)}
               />
