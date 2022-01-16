@@ -93,7 +93,7 @@
   cursor: pointer;
   color: #eee;
   background-color: #af1f1f;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .error-button:hover {

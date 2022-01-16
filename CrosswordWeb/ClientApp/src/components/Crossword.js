@@ -36,7 +36,7 @@ function WinModal(props) {
 function ErrorButton(props) {
   return (
     <div className="center">
-      <button className="error-button" onClick={props.onClick}>Show Errors</button>
+      <button className="error-button" onMouseDown={props.onMouseDown}>Show Errors</button>
     </div>
   )
 }
@@ -424,7 +424,7 @@ export class Crossword extends React.Component {
               </tbody>
             </table>
           </div>
-          <ErrorButton onClick={this.runErrorCheck} />
+          <ErrorButton onMouseDown={this.runErrorCheck} />
         </div>
       </div>
     );
