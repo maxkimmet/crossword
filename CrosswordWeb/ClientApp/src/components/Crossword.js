@@ -105,7 +105,7 @@ function Clue(props) {
   // Scroll to clue if active
   const element = document.getElementById(props.name);
   const parent = document.getElementById(props.parent);
-  if (element && props.isActiveEntry) {
+  if (element && parent && props.isActiveEntry) {
     const offset = element.offsetTop - 0.5 * parent.offsetHeight + 32;
     parent.scroll({top: offset, behavior: "smooth"});
   }
