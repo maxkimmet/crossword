@@ -186,6 +186,14 @@ export class Crossword extends React.Component {
 
   componentDidMount() {
     this.inputElement.current.focus();
+
+    this.loadCrossword();
+  }
+
+  async loadCrossword() {
+    const response = await fetch('crossword');
+    const data = await response.json();
+    console.log(data);
   }
 
   tick() {
