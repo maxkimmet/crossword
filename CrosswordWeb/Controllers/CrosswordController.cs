@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Crossword.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class CrosswordController : ControllerBase
 {
     private readonly ILogger<CrosswordController> _logger;
@@ -14,15 +14,11 @@ public class CrosswordController : ControllerBase
     }
 
     [HttpGet]
-    public String Get()
+    public string Get()
     {
-        return System.Text.Json.JsonSerializer.Serialize(new Models.Crossword {
-            Date = DateTime.Today,
-            Author = "Max Kimmet",
-            Title = "Example Title",
-            Height = 15,
-            Width = 15,
-            Grid = new char[2] {'A', 'b'}
-        });
+        return System.IO.File.ReadAllText(
+            System.IO.Path.Join("Crosswords", "2022-01-11.json"),
+            System.Text.Encoding.UTF8
+        );
     }
 }

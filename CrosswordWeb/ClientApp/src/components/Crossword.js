@@ -191,7 +191,7 @@ export class Crossword extends React.Component {
   }
 
   async loadCrossword() {
-    const response = await fetch('crossword');
+    const response = await fetch('/api/crossword');
     const data = await response.json();
     console.log(data);
   }
