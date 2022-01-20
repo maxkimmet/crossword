@@ -1,8 +1,6 @@
 import React from 'react';
 import './Crossword.css';
 
-import XWORD from '../crosswords/2022-01-11.json'
-
 function Header(props) {
   return (
     <div className="center">
@@ -107,7 +105,7 @@ function Clue(props) {
   const parent = document.getElementById(props.parent);
   if (element && parent && props.isActiveEntry) {
     const offset = element.offsetTop - 0.5 * parent.offsetHeight + 32;
-    parent.scroll({top: offset, behavior: "smooth"});
+    parent.scroll({ top: offset, behavior: "smooth" });
   }
 
   return (
@@ -152,29 +150,33 @@ export class Crossword extends React.Component {
   constructor(props) {
     super(props);
     this.inputElement = React.createRef();
-    this.solution = XWORD.grid;
-
-    // Map of starting cell indices to number of corresponding clue
-    this.startCells = {};
-    XWORD.entries.map(entry => (
-      this.startCells[entry.cells[0]] = entry.name.substring(1)
-    ));
+    let startCells = {};
+    const cell = [0, 0];
+    startCells[cell] = 1;
 
     this.state = {
-      isInProgress: false,
-      isComplete: false,
+      loading: true,
+      inProgress: false,
+      complete: false,
       showWinModal: false,
       time: new Date(0),
-      grid: XWORD.grid.map(cells => (
-        cells.map(cell => (
-          cell.match(/[A-Z]/g) ? "" : "#"
-        ))
-      )),
+      title: "Loading...",
+      author: "Loading...",
+      date: "Loading...",
+      height: 1,
+      width: 7,
+      solution: [["L", "O", "A", "D", "I", "N", "G"]],
+      grid: [["L", "O", "A", "D", "I", "N", "G"]],
+      startCells: startCells,
+      entries: [{
+        "name": "A01",
+        "word": "LOADING",
+        "clue": "Loading...",
+        "cells": [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]]
+      }],
       activeEntryIndex: 0,
       activeCellIndex: 0,
-      errors: Array.from({ length: XWORD.height }, () =>
-        Array.from({ length: XWORD.width }, () => false)
-      ),
+      errors: [[false, false, false, false, false, false, false]],
     }
 
     this.toggleWinModal = this.toggleWinModal.bind(this);
@@ -185,8 +187,6 @@ export class Crossword extends React.Component {
   }
 
   componentDidMount() {
-    this.inputElement.current.focus();
-
     this.loadCrossword();
   }
 
@@ -194,6 +194,32 @@ export class Crossword extends React.Component {
     const response = await fetch('/api/crossword');
     const data = await response.json();
     console.log(data);
+
+    let startCells = {};
+    data.entries.map(entry => (
+      startCells[entry.cells[0]] = entry.name.substring(1)
+    ));
+
+    this.setState({
+      loading: false,
+      title: data.title,
+      author: data.author,
+      date: data.date,
+      height: data.height,
+      width: data.width,
+      solution: data.grid,
+      grid: data.grid.map(cells => (
+        cells.map(cell => (
+          cell.match(/[A-Z]/g) ? "" : "#"
+        ))
+      )),
+      startCells: startCells,
+      entries: data.entries,
+      errors: Array.from({ length: data.height }, () =>
+        Array.from({ length: data.width }, () => false)
+      ),
+    });
+    this.inputElement.current.focus();
   }
 
   tick() {
@@ -210,9 +236,9 @@ export class Crossword extends React.Component {
 
   runErrorCheck() {
     let errors = this.state.errors;
-    for (let i = 0; i < XWORD.height; i++) {
-      for (let j = 0; j < XWORD.width; j++) {
-        errors[i][j] = (this.state.grid[i][j] !== this.solution[i][j]);
+    for (let i = 0; i < this.state.height; i++) {
+      for (let j = 0; j < this.state.width; j++) {
+        errors[i][j] = (this.state.grid[i][j] !== this.state.solution[i][j]);
       }
     }
     this.setState({
@@ -222,8 +248,8 @@ export class Crossword extends React.Component {
 
   goToEntry(name) {
     let activeEntryIndex = -1;
-    for (let i = 0; i < XWORD.entries.length; i++) {
-      if (XWORD.entries[i].name === name) {
+    for (let i = 0; i < this.state.entries.length; i++) {
+      if (this.state.entries[i].name === name) {
         activeEntryIndex = i;
         break;
       }
@@ -244,12 +270,12 @@ export class Crossword extends React.Component {
   }
 
   goToCell(row, col) {
-    const possibleEntries = XWORD.entries.filter(entry => includesArray(entry.cells, [row, col]));
+    const possibleEntries = this.state.entries.filter(entry => includesArray(entry.cells, [row, col]));
 
     // Return false if invalid cell
     if (possibleEntries.length === 0) return false;
 
-    let activeEntry = XWORD.entries[this.state.activeEntryIndex];
+    let activeEntry = this.state.entries[this.state.activeEntryIndex];
     const activeRow = activeEntry.cells[this.state.activeCellIndex][0];
     const activeCol = activeEntry.cells[this.state.activeCellIndex][1];
     const orientation = activeEntry.name[0];
@@ -265,7 +291,7 @@ export class Crossword extends React.Component {
       activeEntry = possibleEntries.filter(entry => entry.name[0] === orientation)[0];
     }
 
-    const activeEntryIndex = XWORD.entries.findIndex(entry => entry.name === activeEntry.name);
+    const activeEntryIndex = this.state.entries.findIndex(entry => entry.name === activeEntry.name);
     const activeCellIndex = activeEntry.cells.findIndex(cell => cell[0] === row && cell[1] === col);
     this.setState({
       activeEntryIndex: activeEntryIndex,
@@ -280,7 +306,7 @@ export class Crossword extends React.Component {
     let errors = this.state.errors;
     let activeEntryIndex = this.state.activeEntryIndex;
     let activeCellIndex = this.state.activeCellIndex;
-    let activeEntry = XWORD.entries[this.state.activeEntryIndex];
+    let activeEntry = this.state.entries[this.state.activeEntryIndex];
     let activeRow = activeEntry.cells[activeCellIndex][0];
     let activeCol = activeEntry.cells[activeCellIndex][1];
 
@@ -290,14 +316,14 @@ export class Crossword extends React.Component {
     // Handle keypresses
     if (value.match(/^[A-Z]$/)) {
       // Enter alphabetic character and move to next cell (return if puzzle complete)
-      if (!this.state.isInProgress) {  // Start timer when first character entered
-        this.setState({ isInProgress: true });
+      if (!this.state.inProgress) {  // Start timer when first character entered
+        this.setState({ inProgress: true });
         this.timerID = setInterval(
           () => this.tick(),
           1000
         );
       }
-      if (!this.state.isComplete) {
+      if (!this.state.complete) {
         grid[activeRow][activeCol] = value;
         errors[activeRow][activeCol] = false;
       }
@@ -305,8 +331,8 @@ export class Crossword extends React.Component {
       if (nextCellIndex < activeEntry.cells.length) {
         activeCellIndex = nextCellIndex;
       } else {
-        activeEntryIndex = (activeEntryIndex + 1) % XWORD.entries.length;
-        activeEntry = XWORD.entries[activeEntryIndex];
+        activeEntryIndex = (activeEntryIndex + 1) % this.state.entries.length;
+        activeEntry = this.state.entries[activeEntryIndex];
         activeCellIndex = 0;
       }
       this.setState({
@@ -317,14 +343,14 @@ export class Crossword extends React.Component {
       });
     } else if (value === "BACKSPACE") {
       // Remove character and move to previous cell
-      if (!this.state.isComplete) { grid[activeRow][activeCol] = ''; }
+      if (!this.state.complete) { grid[activeRow][activeCol] = ''; }
       let nextCellIndex = activeCellIndex - 1;
       if (nextCellIndex >= 0) {
         activeCellIndex = nextCellIndex;
       } else {
-        const entryCount = XWORD.entries.length;
+        const entryCount = this.state.entries.length;
         activeEntryIndex = ((activeEntryIndex - 1) % entryCount + entryCount) % entryCount;
-        activeEntry = XWORD.entries[activeEntryIndex];
+        activeEntry = this.state.entries[activeEntryIndex];
         activeCellIndex = activeEntry.cells.length - 1;
       }
       this.setState({
@@ -334,8 +360,8 @@ export class Crossword extends React.Component {
       });
     } else if (value === "TAB") {
       // Move to beginning of next entry
-      activeEntryIndex = (activeEntryIndex + 1) % XWORD.entries.length;
-      activeEntry = XWORD.entries[activeEntryIndex];
+      activeEntryIndex = (activeEntryIndex + 1) % this.state.entries.length;
+      activeEntry = this.state.entries[activeEntryIndex];
       this.goToEntry(activeEntry.name);
     } else if (value === " ") {
       // Change orientation
@@ -343,22 +369,22 @@ export class Crossword extends React.Component {
     } else if (value === "ARROWUP") {
       // Move to next valid cell above (or wrap around)
       do {
-        activeRow = ((activeRow - 1) % XWORD.height + XWORD.height) % XWORD.height;
+        activeRow = ((activeRow - 1) % this.state.height + this.state.height) % this.state.height;
       } while (!this.goToCell(activeRow, activeCol));
     } else if (value === "ARROWDOWN") {
       // Move to next valid cell below (or wrap around)
       do {
-        activeRow = (activeRow + 1) % XWORD.height % XWORD.height;
+        activeRow = (activeRow + 1) % this.state.height % this.state.height;
       } while (!this.goToCell(activeRow, activeCol));
     } else if (value === "ARROWLEFT") {
       // Move to next valid cell to the left (or wrap around)
       do {
-        activeCol = ((activeCol - 1) % XWORD.width + XWORD.width) % XWORD.width;
+        activeCol = ((activeCol - 1) % this.state.width + this.state.width) % this.state.width;
       } while (!this.goToCell(activeRow, activeCol));
     } else if (value === "ARROWRIGHT") {
       // Move to next valid cell to the right (or wrap around)
       do {
-        activeCol = (activeCol + 1) % XWORD.width % XWORD.width;
+        activeCol = (activeCol + 1) % this.state.width % this.state.width;
       } while (!this.goToCell(activeRow, activeCol));
     } else {
       // Don't prevent default event of unhandled keypresses
@@ -367,17 +393,17 @@ export class Crossword extends React.Component {
     if (preventDefault) { event.preventDefault(); }
 
     // Check if crossword is complete for first time
-    if (!this.state.isComplete && JSON.stringify(this.state.grid) === JSON.stringify(XWORD.grid)) {
+    if (!this.state.complete && JSON.stringify(this.state.grid) === JSON.stringify(this.state.solution)) {
       clearInterval(this.timerID);  // Stop timer
       this.setState({
-        isComplete: true,
+        complete: true,
         showWinModal: true,
       });
     }
   }
 
   render() {
-    const activeEntry = XWORD.entries[this.state.activeEntryIndex];
+    const activeEntry = this.state.entries[this.state.activeEntryIndex];
 
     return (
       <div className="game-wrapper" onClick={() => this.inputElement.current.focus()}>
@@ -389,18 +415,18 @@ export class Crossword extends React.Component {
         }
         <div className="flex-col">
           <Header
-            title={XWORD.title}
-            author={XWORD.author}
-            date={XWORD.date}
+            title={this.state.title}
+            author={this.state.author}
+            date={this.state.date}
           />
           <Timer time={this.state.time} />
           <div className="flex-row">
             <Grid
               grid={this.state.grid}
               errors={this.state.errors}
-              startCells={this.startCells}
-              height={XWORD.height}
-              width={XWORD.width}
+              startCells={this.state.startCells}
+              height={this.state.height}
+              width={this.state.width}
               activeEntry={activeEntry}
               onKeyDown={this.handleKeyDown}
               onClick={this.goToCell}
@@ -419,18 +445,18 @@ export class Crossword extends React.Component {
                 <tr>
                   <td>
                     <ClueList
-                      entries={XWORD.entries}
+                      entries={this.state.entries}
                       orientation="A"
-                      activeEntry={XWORD.entries[this.state.activeEntryIndex]}
+                      activeEntry={this.state.entries[this.state.activeEntryIndex]}
                       activeCell={this.state.activeCell}
                       onClick={this.goToEntry}
                     />
                   </td>
                   <td>
                     <ClueList
-                      entries={XWORD.entries}
+                      entries={this.state.entries}
                       orientation="D"
-                      activeEntry={XWORD.entries[this.state.activeEntryIndex]}
+                      activeEntry={this.state.entries[this.state.activeEntryIndex]}
                       activeCell={this.state.activeCell}
                       onClick={this.goToEntry}
                     />
