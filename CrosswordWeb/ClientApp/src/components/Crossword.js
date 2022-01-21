@@ -201,7 +201,7 @@ export class Crossword extends React.Component {
       date = data[0].date;
     }
 
-    const response = await fetch(`/api/crossword/${date}`);  // TODO: Fix bug for crosswords not 15 x 15
+    const response = await fetch(`/api/crossword/${date}`);
     const data = await response.json();
 
     let startCells = {};

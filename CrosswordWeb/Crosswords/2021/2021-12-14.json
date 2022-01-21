@@ -32,7 +32,7 @@
   ],
   "entries": [
     {
-      "name": "A1",
+      "name": "A01",
       "word": "ESTATE",
       "clue": "Property",
       "cells": [
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "name": "A6",
+      "name": "A06",
       "word": "PELE",
       "clue": "Soccer great",
       "cells": [
@@ -86,7 +86,7 @@
       ]
     },
     {
-      "name": "A7",
+      "name": "A07",
       "word": "PAEANS",
       "clue": "Songs of praise",
       "cells": [
@@ -117,7 +117,7 @@
       ]
     },
     {
-      "name": "D2",
+      "name": "D02",
       "word": "SPA",
       "clue": "Health resort",
       "cells": [
@@ -136,7 +136,7 @@
       ]
     },
     {
-      "name": "D3",
+      "name": "D03",
       "word": "TEE",
       "clue": "Golf peg",
       "cells": [
@@ -155,7 +155,7 @@
       ]
     },
     {
-      "name": "D4",
+      "name": "D04",
       "word": "ALA",
       "clue": "In the style of",
       "cells": [
@@ -174,7 +174,7 @@
       ]
     },
     {
-      "name": "D5",
+      "name": "D05",
       "word": "TEN",
       "clue": "Half a score",
       "cells": [

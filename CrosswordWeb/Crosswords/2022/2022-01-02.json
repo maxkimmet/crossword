@@ -6,110 +6,110 @@
   "width": 9,
   "grid": [
     [
-      "P",
+      "C",
       "I",
-      "B",
-      "B",
+      "S",
+      "T",
       "#",
-      "A",
-      "A",
-      "R",
-      "E"
+      "I",
+      "D",
+      "E",
+      "A"
     ],
     [
-      "E",
-      "G",
       "A",
-      "D",
-      "#",
-      "G",
+      "R",
+      "I",
       "L",
-      "A",
-      "D"
+      "#",
+      "N",
+      "E",
+      "S",
+      "T"
     ],
     [
       "C",
-      "L",
+      "I",
+      "G",
+      "A",
+      "R",
+      "C",
       "A",
       "S",
-      "S",
-      "R",
-      "O",
-      "O",
-      "M"
+      "E"
     ],
     [
       "A",
-      "O",
-      "L",
+      "S",
+      "H",
       "#",
-      "T",
       "E",
-      "E",
+      "A",
+      "R",
       "#",
       "#"
     ],
     [
-      "N",
       "O",
+      "H",
+      "#",
+      "Y",
+      "E",
+      "S",
       "#",
       "A",
-      "R",
-      "E",
-      "#",
-      "M",
-      "Y"
+      "I"
     ],
     [
       "#",
       "#",
+      "R",
+      "E",
+      "S",
+      "#",
+      "N",
+      "O",
+      "R"
+    ],
+    [
+      "C",
+      "E",
       "A",
-      "M",
+      "S",
+      "E",
+      "F",
       "I",
+      "R",
+      "E"
+    ],
+    [
+      "A",
+      "C",
+      "R",
+      "E",
       "#",
       "A",
       "T",
-      "E"
+      "T",
+      "N"
     ],
     [
-      "A",
-      "N",
-      "N",
-      "A",
-      "P",
-      "O",
-      "L",
-      "I",
-      "S"
-    ],
-    [
-      "L",
-      "E",
-      "I",
-      "S",
-      "#",
-      "A",
-      "I",
-      "D",
-      "E"
-    ],
-    [
-      "E",
-      "E",
-      "L",
-      "S",
-      "#",
       "R",
-      "I",
+      "O",
+      "E",
+      "S",
+      "#",
+      "B",
+      "R",
       "A",
-      "S"
+      "E"
     ]
   ],
   "entries": [
     {
       "name": "A01",
-      "word": "PIBB",
-      "clue": "Mr. ____ (soft drink)",
+      "word": "CIST",
+      "clue": "Sacred chest",
       "cells": [
         [
           0,
@@ -131,8 +131,8 @@
     },
     {
       "name": "A05",
-      "word": "AARE",
-      "clue": "Swiss river",
+      "word": "IDEA",
+      "clue": "Notion",
       "cells": [
         [
           0,
@@ -154,8 +154,8 @@
     },
     {
       "name": "A09",
-      "word": "EGAD",
-      "clue": "Zounds!",
+      "word": "ARIL",
+      "clue": "Seed covering",
       "cells": [
         [
           1,
@@ -177,8 +177,8 @@
     },
     {
       "name": "A10",
-      "word": "GLAD",
-      "clue": "Pleased",
+      "word": "NEST",
+      "clue": "Hatchling's home",
       "cells": [
         [
           1,
@@ -200,8 +200,8 @@
     },
     {
       "name": "A11",
-      "word": "CLASSROOM",
-      "clue": "Roll-call site",
+      "word": "CIGARCASE",
+      "clue": "Place for stogies",
       "cells": [
         [
           2,
@@ -243,8 +243,8 @@
     },
     {
       "name": "A13",
-      "word": "AOL",
-      "clue": "You've got mail co",
+      "word": "ASH",
+      "clue": "Bat wood",
       "cells": [
         [
           3,
@@ -262,8 +262,8 @@
     },
     {
       "name": "A14",
-      "word": "TEE",
-      "clue": "Golf peg",
+      "word": "EAR",
+      "clue": "Attention",
       "cells": [
         [
           3,
@@ -281,8 +281,8 @@
     },
     {
       "name": "A15",
-      "word": "NO",
-      "clue": "With 38-Across, what a two-letter answer is in a crossword, usually...or a hint to 20-, 24-, 44- and 51-Across",
+      "word": "OH",
+      "clue": "No kidding!",
       "cells": [
         [
           4,
@@ -296,8 +296,8 @@
     },
     {
       "name": "A16",
-      "word": "ARE",
-      "clue": "Exist",
+      "word": "YES",
+      "clue": "Absolutely!",
       "cells": [
         [
           4,
@@ -315,8 +315,8 @@
     },
     {
       "name": "A17",
-      "word": "MY",
-      "clue": "See 33-Across",
+      "word": "AI",
+      "clue": "2001 Spielberg sci-fi film",
       "cells": [
         [
           4,
@@ -330,8 +330,8 @@
     },
     {
       "name": "A19",
-      "word": "AMI",
-      "clue": "French friend",
+      "word": "RES",
+      "clue": "In medias ____",
       "cells": [
         [
           5,
@@ -349,8 +349,8 @@
     },
     {
       "name": "A20",
-      "word": "ATE",
-      "clue": "Consumed",
+      "word": "NOR",
+      "clue": "Neither's partner",
       "cells": [
         [
           5,
@@ -368,8 +368,8 @@
     },
     {
       "name": "A21",
-      "word": "ANNAPOLIS",
-      "clue": "Maryland's capital",
+      "word": "CEASEFIRE",
+      "clue": "Truce",
       "cells": [
         [
           6,
@@ -411,8 +411,8 @@
     },
     {
       "name": "A24",
-      "word": "LEIS",
-      "clue": "Garlands",
+      "word": "ACRE",
+      "clue": "Land measure",
       "cells": [
         [
           7,
@@ -434,8 +434,8 @@
     },
     {
       "name": "A25",
-      "word": "AIDE",
-      "clue": "Assistant",
+      "word": "ATTN",
+      "clue": "Envelope abbr",
       "cells": [
         [
           7,
@@ -457,8 +457,8 @@
     },
     {
       "name": "A26",
-      "word": "EELS",
-      "clue": "Congers",
+      "word": "ROES",
+      "clue": "Some deer",
       "cells": [
         [
           8,
@@ -480,8 +480,8 @@
     },
     {
       "name": "A27",
-      "word": "RIAS",
-      "clue": "Inlets",
+      "word": "BRAE",
+      "clue": "Scottish hillside",
       "cells": [
         [
           8,
@@ -503,8 +503,8 @@
     },
     {
       "name": "D01",
-      "word": "PECAN",
-      "clue": "Pie nut",
+      "word": "CACAO",
+      "clue": "Chocolate source",
       "cells": [
         [
           0,
@@ -530,8 +530,8 @@
     },
     {
       "name": "D02",
-      "word": "IGLOO",
-      "clue": "Block house?",
+      "word": "IRISH",
+      "clue": "Kind of coffee",
       "cells": [
         [
           0,
@@ -557,8 +557,8 @@
     },
     {
       "name": "D03",
-      "word": "BAAL",
-      "clue": "False god",
+      "word": "SIGH",
+      "clue": "Sound of relief",
       "cells": [
         [
           0,
@@ -580,8 +580,8 @@
     },
     {
       "name": "D04",
-      "word": "BDS",
-      "clue": "Some exams: Abbr",
+      "word": "TLA",
+      "clue": "FBI, CIA, or JFK (or 84-Across, for that matter)",
       "cells": [
         [
           0,
@@ -599,8 +599,8 @@
     },
     {
       "name": "D05",
-      "word": "AGREE",
-      "clue": "See eye to eye",
+      "word": "INCAS",
+      "clue": "Ancient Peruvians",
       "cells": [
         [
           0,
@@ -626,8 +626,8 @@
     },
     {
       "name": "D06",
-      "word": "ALOE",
-      "clue": "Medicinal plant",
+      "word": "DEAR",
+      "clue": "Letter opener",
       "cells": [
         [
           0,
@@ -649,8 +649,8 @@
     },
     {
       "name": "D07",
-      "word": "RAO",
-      "clue": "1990s Indian P.M",
+      "word": "ESS",
+      "clue": "Double curve",
       "cells": [
         [
           0,
@@ -668,8 +668,8 @@
     },
     {
       "name": "D08",
-      "word": "EDM",
-      "clue": "Teacher's deg",
+      "word": "ATE",
+      "clue": "Consumed",
       "cells": [
         [
           0,
@@ -687,8 +687,8 @@
     },
     {
       "name": "D12",
-      "word": "STRIP",
-      "clue": "Piece of bacon",
+      "word": "REESE",
+      "clue": "Actress Witherspoon",
       "cells": [
         [
           2,
@@ -714,8 +714,8 @@
     },
     {
       "name": "D16",
-      "word": "AMASS",
-      "clue": "Accumulate",
+      "word": "YESES",
+      "clue": "Affirmatives",
       "cells": [
         [
           4,
@@ -741,8 +741,8 @@
     },
     {
       "name": "D17",
-      "word": "MTIDA",
-      "clue": "Crete's highest pt",
+      "word": "AORTA",
+      "clue": "Main artery",
       "cells": [
         [
           4,
@@ -768,8 +768,8 @@
     },
     {
       "name": "D18",
-      "word": "YESES",
-      "clue": "Affirmatives",
+      "word": "IRENE",
+      "clue": "Peace goddess",
       "cells": [
         [
           4,
@@ -795,8 +795,8 @@
     },
     {
       "name": "D19",
-      "word": "ANIL",
-      "clue": "Indigo",
+      "word": "RARE",
+      "clue": "Steak order",
       "cells": [
         [
           5,
@@ -818,8 +818,8 @@
     },
     {
       "name": "D20",
-      "word": "ALII",
-      "clue": "Et ____",
+      "word": "NITR",
+      "clue": "Prefix for compounds of element 7",
       "cells": [
         [
           5,
@@ -841,8 +841,8 @@
     },
     {
       "name": "D21",
-      "word": "ALE",
-      "clue": "Pub order",
+      "word": "CAR",
+      "clue": "Train unit",
       "cells": [
         [
           6,
@@ -860,8 +860,8 @@
     },
     {
       "name": "D22",
-      "word": "NEE",
-      "clue": "Born",
+      "word": "ECO",
+      "clue": "Author Umberto",
       "cells": [
         [
           6,
@@ -879,8 +879,8 @@
     },
     {
       "name": "D23",
-      "word": "OAR",
-      "clue": "Scull",
+      "word": "FAB",
+      "clue": "Groovy",
       "cells": [
         [
           6,

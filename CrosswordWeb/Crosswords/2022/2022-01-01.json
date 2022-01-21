@@ -23,7 +23,7 @@
   ],
   "entries": [
     {
-      "name": "A1",
+      "name": "A01",
       "word": "ERA",
       "clue": "Historical period",
       "cells": [
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "name": "A4",
+      "name": "A04",
       "word": "ROT",
       "clue": "Go bad",
       "cells": [
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "name": "A5",
+      "name": "A05",
       "word": "EEE",
       "clue": "Shoe width",
       "cells": [
@@ -80,7 +80,7 @@
       ]
     },
     {
-      "name": "D1",
+      "name": "D01",
       "word": "ERE",
       "clue": "Before",
       "cells": [
@@ -99,7 +99,7 @@
       ]
     },
     {
-      "name": "D2",
+      "name": "D02",
       "word": "ROE",
       "clue": "Caviar",
       "cells": [
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "name": "D3",
+      "name": "D03",
       "word": "ATE",
       "clue": "Consumed",
       "cells": [
