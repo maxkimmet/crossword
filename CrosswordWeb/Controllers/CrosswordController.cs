@@ -16,9 +16,57 @@ public class CrosswordController : ControllerBase
     [HttpGet]
     public string Get()
     {
-        return System.IO.File.ReadAllText(
-            System.IO.Path.Join("Crosswords", "2022-01-11.json"),
-            System.Text.Encoding.UTF8
-        );
+        // Get list of six latest crosswordPaths
+        int maxCrosswords = 6;
+        List<string> latestCrosswordPaths = new List<string>();
+        string[] directories = System.IO.Directory.GetDirectories("Crosswords");
+        Array.Sort(directories);
+        Array.Reverse(directories);
+        foreach (string directory in directories)
+        {
+            if (latestCrosswordPaths.Count >= maxCrosswords) break;
+            string[] crosswordPaths = System.IO.Directory.GetFiles(directory);
+            Array.Sort(crosswordPaths);
+            Array.Reverse(crosswordPaths);
+            foreach (string crosswordPath in crosswordPaths)
+            {
+                latestCrosswordPaths.Add(crosswordPath);
+                if (latestCrosswordPaths.Count >= maxCrosswords) break;
+            }
+        }
+
+        // Generate output as JSON string
+        string response = "[";
+        foreach (string crosswordPath in latestCrosswordPaths)
+        {
+            string crosswordJson = System.IO.File.ReadAllText(
+                crosswordPath,
+                System.Text.Encoding.UTF8
+            );
+            response += $"{crosswordJson},";
+        }
+        response = $"{response.Remove(response.Length - 1)}]";
+
+        return response;
+    }
+
+    [HttpGet("{dateString}")]
+    public string Get(string dateString)
+    {
+        // Return contents of dateString.json
+        DateTime date = DateTime.Parse(dateString);
+        if (DateTime.TryParse(dateString, out date))
+        {
+            string filePath = System.IO.Path.Join(
+                "Crosswords",
+                $"{date.Year}",
+                $"{date.ToString("yyyy-MM-dd")}.json"
+            );
+
+            if (System.IO.File.Exists(filePath))
+                return System.IO.File.ReadAllText(filePath, System.Text.Encoding.UTF8);
+        }
+
+        return "{}";
     }
 }

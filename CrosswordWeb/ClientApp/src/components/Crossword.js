@@ -191,9 +191,8 @@ export class Crossword extends React.Component {
   }
 
   async loadCrossword() {
-    const response = await fetch('/api/crossword');
+    const response = await fetch('/api/crossword/2022-01-11');  // TODO: Fix bug for crosswords not 15 x 15
     const data = await response.json();
-    console.log(data);
 
     let startCells = {};
     data.entries.map(entry => (
