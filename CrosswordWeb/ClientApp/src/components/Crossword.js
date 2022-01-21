@@ -28,7 +28,7 @@ function WinModal(props) {
         <button className="btn-close" onClick={props.onClick}></button>
       </div>
     </div>
-  )
+  );
 }
 
 function ErrorButton(props) {
@@ -191,7 +191,17 @@ export class Crossword extends React.Component {
   }
 
   async loadCrossword() {
-    const response = await fetch('/api/crossword/2022-01-11');  // TODO: Fix bug for crosswords not 15 x 15
+    // Get date string from URL
+    let { date } = this.props.match.params;
+
+    // Get latest crossword if date is missing
+    if (typeof date === 'undefined') {
+      const response = await fetch('/api/crossword');
+      const data = await response.json();
+      date = data[0].date;
+    }
+
+    const response = await fetch(`/api/crossword/${date}`);  // TODO: Fix bug for crosswords not 15 x 15
     const data = await response.json();
 
     let startCells = {};
