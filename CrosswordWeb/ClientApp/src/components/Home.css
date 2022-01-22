@@ -1,13 +1,22 @@
 .crossword-menu {
   display: flex;
-  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  max-width: 450px;
+  max-width: 800px;
+  margin: auto;
 }
 
-.crossword-menu-item {
-  display: flex;
-  align-self: stretch;
-  align-items: center;
+.menu-button {
+  height: 120px;
+  width: 200px;
+  background-color: #eee;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 5px;
+}
+
+.menu-button:hover {
+  border-color: black;
+  border-width: 1px;
 }

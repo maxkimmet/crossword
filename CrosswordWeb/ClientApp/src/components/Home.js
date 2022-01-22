@@ -19,8 +19,8 @@ class CrosswordMenuItem extends Component {
 
   render() {
     return (
-      <div className="crossword-menu-item">
-        <button className="btn btn-light" onClick={this.handleClick}>
+      <div>
+        <button className="menu-button btn btn-light" onClick={this.handleClick}>
           <h5>{this.title}</h5>
           <span>{this.date}</span>
         </button>
@@ -70,6 +70,7 @@ export class Home extends Component {
     return (
       <div className="center">
         <h1>Latest Crosswords</h1>
+        <br></br>
         <CrosswordMenu
           crosswords={this.state.crosswords}
         />
