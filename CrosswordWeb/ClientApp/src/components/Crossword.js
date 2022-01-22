@@ -190,6 +190,11 @@ export class Crossword extends React.Component {
     this.loadCrossword();
   }
 
+  componentWillUnmount() {
+    // Stop timer
+    clearInterval(this.timerID);
+  }
+
   async loadCrossword() {
     // Get date string from URL
     let { date } = this.props.match.params;
