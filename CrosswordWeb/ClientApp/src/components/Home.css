@@ -20,3 +20,16 @@
   border-color: black;
   border-width: 1px;
 }
+
+.control-list {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.info-panel {
+  padding: 10px 40px 10px 40px;
+  margin-top: 36px;
+  margin-bottom: 16px;
+  outline: 1px solid black;
+}

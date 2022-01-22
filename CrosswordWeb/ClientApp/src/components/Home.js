@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
 import './Home.css';
 
+function CrosswordControls() {
+  return (
+    <div className="info-panel">
+      <h4>Controls</h4>
+      <ul className="control-list">
+        <li><b>Backspace</b> to delete a character and move to the previous cell</li>
+        <li><b>Tab</b> to move to the next entry</li>
+        <li><b>Space</b> to toggle orientation</li>
+        <li><b>Arrow keys</b> to move to an adjacent cell</li>
+      </ul>
+    </div>
+  );
+}
+
 class CrosswordMenuItem extends Component {
   static displayName = CrosswordMenuItem.name;
 
@@ -34,6 +48,7 @@ function CrosswordMenu(props) {
     <div className="crossword-menu">
       {props.crosswords.map(crossword => (
         <CrosswordMenuItem
+          key={crossword.date}
           title={crossword.title}
           date={crossword.date}
         />
@@ -68,9 +83,9 @@ export class Home extends Component {
 
   render() {
     return (
-      <div className="center">
-        <h1>Latest Crosswords</h1>
-        <br></br>
+      <div className="flex-col">
+        <CrosswordControls />
+        <h3>Latest Crosswords</h3>
         <CrosswordMenu
           crosswords={this.state.crosswords}
         />
