@@ -1,0 +1,13 @@
+.crossword-menu {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 450px;
+}
+
+.crossword-menu-item {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+}
