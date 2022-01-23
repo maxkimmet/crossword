@@ -6,10 +6,10 @@ function CrosswordControls() {
     <div className="info-panel">
       <h4>Controls</h4>
       <ul className="control-list">
-        <li><b>Backspace</b> to delete a character and move to the previous cell</li>
+        <li><b>Click</b> to move to a cell</li>
         <li><b>Tab</b> to move to the next entry</li>
-        <li><b>Space</b> to toggle orientation</li>
         <li><b>Arrow keys</b> to move to an adjacent cell</li>
+        <li><b>Space</b> or <b>click active cell</b> to toggle orientation</li>
       </ul>
     </div>
   );
