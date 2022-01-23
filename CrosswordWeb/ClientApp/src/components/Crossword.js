@@ -196,16 +196,8 @@ export class Crossword extends React.Component {
   }
 
   async loadCrossword() {
-    // Get date string from URL
+    // Fetch crossword based on date in URL
     let { date } = this.props.match.params;
-
-    // Get latest crossword if date is missing
-    if (typeof date === 'undefined') {
-      const response = await fetch('/api/crossword');
-      const data = await response.json();
-      date = data[0].date;
-    }
-
     const response = await fetch(`/api/crossword/${date}`);
     const data = await response.json();
 

@@ -14,7 +14,7 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route path='/crossword/:date?' component={Crossword} />
+        <Route path='/crossword/:date' component={Crossword} />
         <Route path='/tic-tac-toe' component={TicTacToe} />
       </Layout>
     );
