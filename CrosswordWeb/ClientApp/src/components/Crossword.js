@@ -73,7 +73,7 @@ function Cell(props) {
 function Grid(props) {
   return (
     <div>
-      <span><b>{`${props.activeEntry.name}. ${props.activeEntry.clue}`}</b></span>
+      <span className="clue-text"><b>{`${props.activeEntry.name}. ${props.activeEntry.clue}`}</b></span>
       <table className="grid">
         <tbody>
           {props.grid.map((cells, row) => (
