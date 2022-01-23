@@ -1,5 +1,10 @@
+from __future__ import annotations
+from typing import Optional
+
+from dataclasses import dataclass
 import json
 
+from numpy import inf
 
 class Crossword:
     """Used to generate a crossword based on a config file and list of possible clues.
@@ -42,8 +47,8 @@ class Crossword:
         except KeyError:
             raise KeyError("config file must have title, author, date, and grid")
 
-        # Import clues
-        self.clues = clues
+        # Convert clues to data class
+        clues = [Clue(clue['answer'], clue['clue'], clue['priority']) for clue in clues]
 
         # Initialize crossword entries
         self.entries = []
@@ -58,7 +63,7 @@ class Crossword:
                     while j + length < self.width and self.grid[i][j + length] != '#':
                         length += 1
                     if length > 1:
-                        self.entries.append(Entry(f"A{clue_enum}", (i, j), length))
+                        self.entries.append(Entry(f"A{str(clue_enum).zfill(2)}", (i, j), length, clues))
                         cell_starts_clue = True
 
                 # Check if cell starts down entry
@@ -67,7 +72,7 @@ class Crossword:
                     while i + length < self.height and self.grid[i + length][j] != '#':
                         length += 1
                     if length > 1:
-                        self.entries.append(Entry(f"D{clue_enum}", (i, j), length))
+                        self.entries.append(Entry(f"D{str(clue_enum).zfill(2)}", (i, j), length, clues))
                         cell_starts_clue = True
 
                 if cell_starts_clue:
@@ -79,68 +84,82 @@ class Crossword:
                 if entry1 != entry2:
                     entry1.update_overlap(entry2)
 
-    # TODO: Format as wrapper for generate function
     def generate(self, out_file=""):
         # Generate crossword
-        if not self._generate():
+        if self._generate() is not None:
             Exception("Crossword could not be generated with word list")
 
         # Update clues for entries and fill in grid
         for entry in self.entries:
-            entry.clue = self.clues[entry.word]
             for i in range(entry.length):
                 row, col = entry.cells[i]
-                self.grid[row][col] = entry.word[i]
+                self.grid[row][col] = entry.clue.answer[i]
 
         if out_file:
             self.export(out_file)
 
-    def _generate(self, used_words=[], print_grid=True) -> bool:
-        # TODO: Choose entries with least possible words
-        #       Of those, choose entry with most intersections with remaining words
+    def _generate(self, used_words=[], print_grid=True) -> Optional[Entry]:
+        # Get entries not yet assigned a clue
+        possible_entries = [e for e in self.entries if not e.clue]
+
+        # Return None if crossword is complete
+        if len(possible_entries) == 0:
+            return None
+
+        # Find entry with least possible words and most intersections
+        # TODO: Prioritize maximum remaining intersections over minimum possible words?
         entry = None
-        for e in self.entries:
-            if e.word == "":
+        clue_count = inf
+        intersection_count = 0
+        for e in possible_entries:
+            e.update_constraints(used_words)
+            # if e.clues_remaining() == 0:
+            #     return e
+            # elif e.open_intersections() > intersection_count:
+            #     entry = e
+            #     clue_count = e.clues_remaining()
+            #     intersection_count = e.open_intersections()
+            # elif e.open_intersections() == intersection_count and e.clues_remaining() < clue_count:
+            #     entry = e
+            #     intersection_count = e.open_intersections()
+            if e.clues_remaining() < clue_count:
                 entry = e
-                break
-        if entry is None:
-            return True
-
-        # Update entry constraints based on current state of crossword
-        entry.update_constraints()
-
-        # TODO: Get list of possible words ranked best to worst
-        word_list = [
-            word for word in self.clues.keys()
-            if len(word) == entry.length
-            and word not in used_words
-            and entry.fits_constraints(word)
-        ]
+                clue_count = e.clues_remaining()
+                intersection_count = e.open_intersections()
+            elif e.clues_remaining() == clue_count and e.open_intersections() > intersection_count:
+                entry = e
+                intersection_count = e.open_intersections()
 
         # Try generating puzzle with word assigned to entry
-        for word in word_list:
+        for clue in entry.sorted_clues():
             # Assign word to entry and remove from possible words
-            entry.word = word
-            used_words.append(word)
+            entry.clue = clue
+            used_words.append(clue.answer)
 
             # Generate and print grid if flag is set
             if print_grid:
                 local_grid = [[x for x in row] for row in self.grid]
-                for local_entry in [x for x in self.entries if x.word]:
+                for local_entry in [x for x in self.entries if x.clue]:
                     for i in range(local_entry.length):
                         row, col = local_entry.cells[i]
-                        local_grid[row][col] = local_entry.word[i]
+                        local_grid[row][col] = local_entry.clue.answer[i]
                 print("\n" + "\n".join(["".join(row) for row in local_grid]))
 
-            # Generate rest of puzzle
-            if (self._generate(used_words, print_grid)):  # Return true if word leads to solved puzzle
-                return True
-            else:
-                entry.word = ""
-                used_words = used_words[:-1]
+            # Generate rest of puzzle and return None if successful
+            failed_entry = self._generate(used_words, print_grid)
+            if failed_entry is None:
+                return None
 
-        # Return False if no words fit entry based on current crossword configuration
-        return False
+            # Remove clue from entry and answer from used words
+            entry.clue = None
+            used_words = used_words[:-1]
+
+            # Continue backtracking if entry isn't constrained by failing entry
+            if failed_entry not in entry.overlaps:
+                return failed_entry
+
+        # Return failed entry if no words result in a completed crossword
+        return entry
 
     def export(self, out_file : str):
         output = {
@@ -155,8 +174,8 @@ class Crossword:
         for entry in sorted(self.entries):
             output['entries'].append({
                 'name': entry.name,
-                'word': entry.word,
-                'clue': entry.clue,
+                'word': entry.clue.answer,
+                'clue': entry.clue.clue,
                 'cells': entry.cells
             })
 
@@ -173,16 +192,18 @@ class Crossword:
 
 class Entry:
 
-    def __init__(self, name, start_cell, length):
+    def __init__(self, name, start_cell, length, clues):
         self.name = name
         self.start_cell = start_cell
         self.length = length
         self.orientation = name[0]
         self.enum = int(name[1:])
-        self.word = ""
-        self.clue = ""
+        self.clue : Clue = None
         self.overlaps : dict[Entry, tuple[int, int]] = dict()  # {Entry: (id of self, id of other)}
         self.constraints : list[tuple[int, str]] = []
+        self.possible_clues : list[Clue] = [clue for clue in clues if len(clue.answer) == length]
+        self.constrained_clues : list[Clue] = []
+
         self.cells = []
         for i in range(length):
             if self.orientation == 'A':
@@ -198,18 +219,33 @@ class Entry:
                 if self.cells[i] == other.cells[j]:
                     self.overlaps[other] = (i, j)
 
-    def update_constraints(self) -> None:
-        # Generate constraints as list of tuples of (index, letter)
+    def update_constraints(self, used_words) -> None:
         self.constraints = []
         for other, indices in self.overlaps.items():
-            if other.word:
-                self.constraints.append((indices[0], other.word[indices[1]]))
+            if other.clue:
+                self.constraints.append((indices[0], other.clue.answer[indices[1]]))
+        self.constrained_clues = [
+            clue for clue in self.possible_clues
+            if len(clue.answer) == self.length
+            and clue.answer not in used_words
+            and self.fits_constraints(clue.answer)
+        ]
 
     def fits_constraints(self, word : str) -> bool:
         for index, letter in self.constraints:
             if word[index] != letter:
                 return False
         return True
+
+    def sorted_clues(self) -> list[Clue]:
+        # TODO: Rank clues best to worst based on maximum constraint to intersecting entries
+        return self.constrained_clues
+
+    def clues_remaining(self) -> int:
+        return len(self.constrained_clues)
+
+    def open_intersections(self) -> int:
+        return self.length - len(self.constraints)
 
     def __gt__(self, obj):
         return self.orientation > obj.orientation or \
@@ -218,5 +254,11 @@ class Entry:
     def __str__(self):
         return self.name.ljust(4) \
             + str(self.start_cell).ljust(12) \
-            + self.word.ljust(16) \
-            + self.clue
+            + self.clue.answer.ljust(16) \
+            + self.clue.clue
+
+@dataclass
+class Clue:
+    answer: str
+    clue: str
+    priority: int = 1

@@ -1,5 +1,7 @@
 # %%
 import pandas as pd
+import time
+from datetime import timedelta
 
 from crossword_helper import Crossword
 
@@ -42,10 +44,18 @@ df_clues = df_clues.groupby('answer') \
     .sort_values('answer_count', ascending=False) \
     .reset_index()
 df_clues = df_clues[['answer', 'clue']]
-clues = {row[0]: row[1] for row in df_clues.values}
+clues = []
+for row in df_clues.values:
+    clues.append({
+        'answer': row[0],
+        'clue': row[1],
+        'priority': 1
+    })
 
 # %% Generate crossword
-crossword = Crossword("input.json", clues)
-crossword.generate("crosswords/2022-01-02.json")
+start_time = time.time()
+crossword = Crossword("inputs/15x15-0.json", clues)
+crossword.generate("crosswords/2022-01-11.json")
+print(f"Crossword generated in {timedelta(seconds=int(time.time()-start_time))}")
 
 # %%
