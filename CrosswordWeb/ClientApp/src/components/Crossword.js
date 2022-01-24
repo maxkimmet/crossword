@@ -225,7 +225,7 @@ export class Crossword extends React.Component {
         Array.from({ length: data.width }, () => false)
       ),
     });
-    setTimeout(() => this.inputElement.current.focus(), 200);
+    this.inputElement.current.focus();
   }
 
   tick() {
@@ -270,12 +270,15 @@ export class Crossword extends React.Component {
       activeEntryIndex: activeEntryIndex,
       activeCellIndex: 0,
     });
-    setTimeout(() => this.inputElement.current.focus(), 200);
+    this.inputElement.current.focus();
 
     return true;
   }
 
   goToCell(row, col) {
+    // Focus on cell to force keyboard to pop up on mobile
+    this.inputElement.current.focus();
+
     const possibleEntries = this.state.entries.filter(entry => includesArray(entry.cells, [row, col]));
 
     // Return false if invalid cell
@@ -412,7 +415,7 @@ export class Crossword extends React.Component {
     const activeEntry = this.state.entries[this.state.activeEntryIndex];
 
     return (
-      <div className="game-wrapper" onClick={() => setTimeout(() => this.inputElement.current.focus(), 200)}>
+      <div className="game-wrapper" onClick={() => this.inputElement.current.focus()}>
         {this.state.showWinModal &&
           <WinModal
             time={this.state.time}
