@@ -225,7 +225,7 @@ export class Crossword extends React.Component {
         Array.from({ length: data.width }, () => false)
       ),
     });
-    this.inputElement.current.focus();
+    setTimeout(() => this.inputElement.current.focus(), 0);
   }
 
   tick() {
@@ -270,7 +270,7 @@ export class Crossword extends React.Component {
       activeEntryIndex: activeEntryIndex,
       activeCellIndex: 0,
     });
-    this.inputElement.current.focus();
+    setTimeout(() => this.inputElement.current.focus(), 0);
 
     return true;
   }
@@ -412,7 +412,7 @@ export class Crossword extends React.Component {
     const activeEntry = this.state.entries[this.state.activeEntryIndex];
 
     return (
-      <div className="game-wrapper" onClick={() => this.inputElement.current.focus()}>
+      <div className="game-wrapper" onClick={() => setTimeout(() => this.inputElement.current.focus(), 0)}>
         {this.state.showWinModal &&
           <WinModal
             time={this.state.time}
