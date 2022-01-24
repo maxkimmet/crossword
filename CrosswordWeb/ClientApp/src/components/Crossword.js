@@ -61,7 +61,7 @@ function Cell(props) {
       <span>{props.annotation}</span>
       <input
         className={classes}
-        readOnly={true}
+        // readOnly={true}
         value={value}
         onKeyDown={props.onKeyDown}
         ref={props.annotation === "01" ? props.inputRef : null}
