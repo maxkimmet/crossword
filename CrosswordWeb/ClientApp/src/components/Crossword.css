@@ -206,4 +206,13 @@
     width: 180px;
     font-size: 12px;
   }
+
+  .clue-table {
+    display: none;
+  }
+
+  .modalContainer .modal {
+    width: 320px;
+    height: 120px;
+  }
 }
