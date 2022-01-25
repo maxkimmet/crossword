@@ -5,6 +5,7 @@
   border: 0;
   font-size: 100%;
   list-style: none;
+  border-radius: 0;
 }
 
 /* Provide sufficient contrast against white background */
