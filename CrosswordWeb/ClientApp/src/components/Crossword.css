@@ -1,4 +1,7 @@
 .hidden-selectable-input {
+  position: fixed;
+  left: 50%;
+  top: 50%;
   height: 0;
   width: 0;
 }
