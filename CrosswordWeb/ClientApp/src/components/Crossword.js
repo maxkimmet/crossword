@@ -39,6 +39,17 @@ function ErrorButton(props) {
   )
 }
 
+function HiddenInput(props) {
+  return (
+    <input
+      className="hidden-selectable-input"
+      ref={props.inputRef}
+      onChange={props.onChange}
+      onKeyDown={props.onKeyDown}
+    />
+  )
+}
+
 function Cell(props) {
   let classes = "cell";
   let value = props.value;
@@ -61,10 +72,8 @@ function Cell(props) {
       <span>{props.annotation}</span>
       <input
         className={classes}
-        // readOnly={true}
+        readOnly={true}
         value={value}
-        onKeyDown={props.onKeyDown}
-        ref={props.annotation === "01" ? props.inputRef : null}
       />
     </td>
   );
@@ -86,9 +95,7 @@ function Grid(props) {
                   activeEntry={includesArray(props.activeEntry.cells, [row, col])}
                   activeCell={row === props.activeRow && col === props.activeCol}
                   annotation={props.startCells[[row, col]]}
-                  onKeyDown={props.onKeyDown}
                   onClick={() => props.onClick(row, col)}
-                  inputRef={props.inputRef}
                 />
               ))}
             </tr>
@@ -184,6 +191,7 @@ export class Crossword extends React.Component {
     this.goToEntry = this.goToEntry.bind(this);
     this.goToCell = this.goToCell.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -310,6 +318,20 @@ export class Crossword extends React.Component {
     return true;
   }
 
+  handleChange(event) {
+    // Not triggered when handleKeyDown prevents default
+    // Handles Android virtual keyboard input where onKeyDown event is unusable
+
+    // Get first letter entered and pass to key down handler
+    let key = event.target.value[0];
+    let androidKeyDownEvent = new CustomEvent('androidKeyDown');
+    androidKeyDownEvent.key = key;
+    this.handleKeyDown(androidKeyDownEvent);
+
+    // Reset hidden input element
+    this.inputElement.current.value = "";
+  }
+
   handleKeyDown(event) {
     let grid = this.state.grid;
     let errors = this.state.errors;
@@ -429,6 +451,11 @@ export class Crossword extends React.Component {
             date={this.state.date}
           />
           <Timer time={this.state.time} />
+          <HiddenInput
+            inputRef={this.inputElement}
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+          />
           <div className="flex-row">
             <Grid
               grid={this.state.grid}
@@ -437,11 +464,9 @@ export class Crossword extends React.Component {
               height={this.state.height}
               width={this.state.width}
               activeEntry={activeEntry}
-              onKeyDown={this.handleKeyDown}
               onClick={this.goToCell}
               activeRow={activeEntry.cells[this.state.activeCellIndex][0]}
               activeCol={activeEntry.cells[this.state.activeCellIndex][1]}
-              inputRef={this.inputElement}
             />
             <table className="clue-table">
               <thead>
