@@ -1,3 +1,7 @@
+::selection {
+  background: #acc;
+}
+
 .hidden-selectable-input {
   position: fixed;
   left: 50%;
