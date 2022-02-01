@@ -30,8 +30,8 @@ public class CrosswordController : ControllerBase
             Array.Reverse(crosswordPaths);
             foreach (string crosswordPath in crosswordPaths)
             {
-                latestCrosswordPaths.Add(crosswordPath);
                 if (latestCrosswordPaths.Count >= maxCrosswords) break;
+                latestCrosswordPaths.Add(crosswordPath);
             }
         }
 

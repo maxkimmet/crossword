@@ -84,9 +84,9 @@ class Crossword:
                 if entry1 != entry2:
                     entry1.update_overlap(entry2)
 
-    def generate(self, out_file=""):
+    def generate(self, out_file="", used_words=[]):
         # Generate crossword
-        if self._generate() is not None:
+        if self._generate(used_words) is not None:
             Exception("Crossword could not be generated with word list")
 
         # Update clues for entries and fill in grid
