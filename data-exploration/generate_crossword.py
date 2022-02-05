@@ -81,7 +81,7 @@ for year in reversed(sorted(os.listdir(xword_dir))):
 # Generate crossword
 start_time = time.time()
 crossword = Crossword("inputs/15x15-0.json", clues)
-crossword.generate("crosswords/2022-01-31.json", blacklist)
+crossword.generate("crosswords/crossword.json", blacklist)
 print(f"Crossword generated in {timedelta(seconds=int(time.time()-start_time))}")
 
 # %%
