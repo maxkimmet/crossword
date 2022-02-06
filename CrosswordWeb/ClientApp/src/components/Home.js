@@ -86,9 +86,12 @@ export class Home extends Component {
       <div className="flex-col">
         <CrosswordControls />
         <h3>Latest Crosswords</h3>
-        <CrosswordMenu
-          crosswords={this.state.crosswords}
-        />
+        {this.state.loading ?
+          <p>Loading...</p> :
+          <CrosswordMenu
+            crosswords={this.state.crosswords}
+          />
+        }
       </div>
     );
   }
