@@ -1,4 +1,5 @@
 import React from 'react';
+import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@microsoft/signalr'
 import './Crossword.css';
 
 function Header(props) {
@@ -162,6 +163,7 @@ export class Crossword extends React.Component {
     startCells[cell] = 1;
 
     this.state = {
+      hubConnection: null,
       loading: true,
       inProgress: false,
       complete: false,
@@ -196,11 +198,32 @@ export class Crossword extends React.Component {
 
   componentDidMount() {
     this.loadCrossword();
+    this.openHubConnection();
   }
 
   componentWillUnmount() {
     // Stop timer
     clearInterval(this.timerID);
+  }
+
+  async openHubConnection() {
+    const hubConnection = new HubConnectionBuilder()
+      .withUrl("/crosswordhub")
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    this.setState({ hubConnection }, () => {
+      this.state.hubConnection
+        .start()
+        .then(() => {
+          console.log("Socket opened");
+        })
+        .catch(err => console.log("Error establishing connection"));
+
+      this.state.hubConnection.on('clientMessage', msg => {
+        console.log(msg);
+      });
+    });
   }
 
   async loadCrossword() {
@@ -343,6 +366,7 @@ export class Crossword extends React.Component {
 
     let preventDefault = true;
     const value = event.key.toUpperCase();
+    this.state.hubConnection.invoke('serverMessage', value);
 
     // Handle keypresses
     if (value.match(/^[A-Z]$/)) {
