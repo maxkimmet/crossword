@@ -1,11 +1,20 @@
-// namespace Crossword.Models;
+namespace Crossword.Models;
 
-// public class Crossword
-// {
-//     public DateTime Date { get; set; }
-//     public string? Title { get; set; }
-//     public string? Author { get; set; }
-//     public int Height { get; set; }
-//     public int Width { get; set; }
-//     public char[]? Grid { get; set; }
-// }
+public class Entry
+{
+    public string? name { get; set; }
+    public string? word { get; set; }
+    public string? clue { get; set; }
+    public int[][]? cells { get; set; }
+}
+
+public class Crossword
+{
+    public DateTime date { get; set; }
+    public string? title { get; set; }
+    public string? author { get; set; }
+    public int height { get; set; }
+    public int width { get; set; }
+    public char[][]? grid { get; set; }
+    public List<Entry>? entries { get; set; }
+}
