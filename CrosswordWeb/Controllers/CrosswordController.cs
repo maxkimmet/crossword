@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Crossword.Models;
 
 namespace Crossword.Controllers;
 
@@ -53,20 +54,9 @@ public class CrosswordController : ControllerBase
     [HttpGet("{dateString}")]
     public string Get(string dateString)
     {
-        // Return contents of dateString.json
-        DateTime date = DateTime.Parse(dateString);
-        if (DateTime.TryParse(dateString, out date))
-        {
-            string filePath = System.IO.Path.Join(
-                "Crosswords",
-                $"{date.Year}",
-                $"{date.ToString("yyyy-MM-dd")}.json"
-            );
-
-            if (System.IO.File.Exists(filePath))
-                return System.IO.File.ReadAllText(filePath, System.Text.Encoding.UTF8);
-        }
-
+        string? response = Game.GetCrosswordString(dateString);
+        if (response != null)
+            return response;
         return "{}";
     }
 }
