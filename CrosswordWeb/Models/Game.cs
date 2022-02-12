@@ -5,13 +5,11 @@ namespace Crossword.Models;
 public class Game
 {
     public string Id;
-    public List<string> ConnectionIds;
     public Crossword? ActiveCrossword;
 
-    public Game(string gameId, string connectionId, string crosswordDate)
+    public Game(string gameId, string crosswordDate)
     {
         this.Id = gameId;
-        this.ConnectionIds = new List<string> { connectionId };
         string? crosswordData = Game.GetCrosswordString(crosswordDate);
         this.ActiveCrossword = JsonSerializer.Deserialize<Crossword>(crosswordData!);
     }
