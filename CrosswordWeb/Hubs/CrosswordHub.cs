@@ -6,36 +6,29 @@ namespace Crossword.Hubs;
 public interface ICrosswordClient
 {
     Task UpdateUrl(string gameId);
-    Task JoinGame(string gameId);
-    Task ClientMessage(string msg);
     Task RenderGrid(char[][] grid);
 }
 
 public class CrosswordHub : Hub<ICrosswordClient>
 {
-    // Map game IDs to games
-    Dictionary<string, Game> GameIdToGame;
-    // Map sessions to games
-    Dictionary<string, Game> ConnectionToGame;
-    // Map games to sessions
-    Dictionary<string, List<string>> GameIdToConnections;
+    private IGameRepository _gameRepository;
 
-    public CrosswordHub()
+    public CrosswordHub(IGameRepository gameRepository)
     {
-        this.GameIdToGame = new Dictionary<string, Game>();
-        this.ConnectionToGame = new Dictionary<string, Game>();
-        this.GameIdToConnections = new Dictionary<string, List<string>>();
+        this._gameRepository = gameRepository;
     }
 
     public async Task CreateGame(string crosswordDate)
     {
-        string gameId = Guid.NewGuid().ToString();
+        string gameId = Guid.NewGuid().ToString();  // TODO: Ensure ID is unique before creating game
         Game game = new Game(gameId, crosswordDate);
 
         // Update dictionaries
-        this.GameIdToGame[gameId] = game;
-        this.ConnectionToGame[Context.ConnectionId] = game;
-        this.GameIdToConnections[gameId] = new List<string> { Context.ConnectionId };
+        Console.WriteLine(gameId);
+        this._gameRepository.GameIdToGame[gameId] = game;
+        Console.WriteLine(this._gameRepository.GameIdToGame.Count);
+        this._gameRepository.ConnectionToGame[Context.ConnectionId] = game;
+        this._gameRepository.GameIdToConnections[gameId] = new List<string> { Context.ConnectionId };
 
         // Add player to hub group for game
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
@@ -46,19 +39,24 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
     public async Task JoinGame(string gameId)
     {
-        Game game = GameIdToGame[gameId];
+        Console.WriteLine(this._gameRepository.GameIdToGame.Count);
+
+        Game game = this._gameRepository.GameIdToGame[gameId];
 
         // Update dictionaries
-        this.ConnectionToGame[Context.ConnectionId] = game;
-        this.GameIdToConnections[game.Id].Add(Context.ConnectionId);
+        this._gameRepository.ConnectionToGame[Context.ConnectionId] = game;
+        this._gameRepository.GameIdToConnections[game.Id].Add(Context.ConnectionId);
 
         // Add player to hub group for game
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+
+        // Render grid for player
+        await Clients.Client(Context.ConnectionId).RenderGrid(game.ActiveCrossword.grid);
     }
 
     public async Task UpdateCell(int row, int col, char value)
     {
-        Game game = this.ConnectionToGame[Context.ConnectionId];
+        Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
         if (game.ActiveCrossword != null)
         {
             game.ActiveCrossword.grid![row][col] = value;
@@ -71,23 +69,18 @@ public class CrosswordHub : Hub<ICrosswordClient>
         await base.OnConnectedAsync();
     }
 
-    public async Task ServerMessage(string msg)
-    {
-        await Clients.Group("example_group_id").ClientMessage($"From server: {msg}");
-    }
-
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        Game game = this.ConnectionToGame[Context.ConnectionId];
+        Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
 
         // Remove player from group (group is automatically deleted if it has no connections)
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, game.Id);
 
         // Update dictionaries
-        this.ConnectionToGame.Remove(Context.ConnectionId);
-        this.GameIdToConnections[game.Id].Remove(Context.ConnectionId);
-        if (this.GameIdToConnections[game.Id].Count == 0)
-            this.GameIdToGame.Remove(game.Id);
+        this._gameRepository.ConnectionToGame.Remove(Context.ConnectionId);
+        this._gameRepository.GameIdToConnections[game.Id].Remove(Context.ConnectionId);
+        if (this._gameRepository.GameIdToConnections[game.Id].Count == 0)
+            this._gameRepository.GameIdToGame.Remove(game.Id);
 
         await base.OnDisconnectedAsync(exception);
     }
