@@ -1,3 +1,4 @@
+using Crossword.Models;
 using Crossword.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "CrosswordApi", Version = "v1" });
 });
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<IGameRepository>(new GameRepository());
 
 var app = builder.Build();
 

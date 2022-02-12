@@ -2,6 +2,8 @@ import React from 'react';
 import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@microsoft/signalr'
 import './Crossword.css';
 
+// TODO: Prevent user interaction before connection to hub, indicate when connecting
+
 function Header(props) {
   return (
     <div className="center">
@@ -216,12 +218,21 @@ export class Crossword extends React.Component {
       this.state.hubConnection
         .start()
         .then(() => {
-          console.log("Socket opened");
+          let { date, gameId } = this.props.match.params;
+          if (gameId) {
+            this.state.hubConnection.invoke('joinGame', gameId);
+          } else {
+            this.state.hubConnection.invoke('createGame', date);
+          }
         })
         .catch(err => console.log("Error establishing connection"));
 
-      this.state.hubConnection.on('clientMessage', msg => {
-        console.log(msg);
+      this.state.hubConnection.on('updateUrl', gameId => {
+        window.history.replaceState("", "", `${window.location.pathname}/${gameId}`);
+      })
+
+      this.state.hubConnection.on('renderGrid', grid => {
+        this.setState({ grid: grid });
       });
     });
   }
@@ -366,7 +377,6 @@ export class Crossword extends React.Component {
 
     let preventDefault = true;
     const value = event.key.toUpperCase();
-    this.state.hubConnection.invoke('serverMessage', value);
 
     // Handle keypresses
     if (value.match(/^[A-Z]$/)) {
@@ -390,15 +400,15 @@ export class Crossword extends React.Component {
         activeEntry = this.state.entries[activeEntryIndex];
         activeCellIndex = 0;
       }
+      this.state.hubConnection.invoke('updateCell', activeRow, activeCol, value);
       this.setState({
-        grid: grid,
         errors: errors,
         activeEntryIndex: activeEntryIndex,
         activeCellIndex: activeCellIndex,
       });
     } else if (value === "BACKSPACE") {
       // Remove character and move to previous cell
-      if (!this.state.complete) { grid[activeRow][activeCol] = ''; }
+      if (!this.state.complete) { grid[activeRow][activeCol] = ' '; }
       let nextCellIndex = activeCellIndex - 1;
       if (nextCellIndex >= 0) {
         activeCellIndex = nextCellIndex;
@@ -408,8 +418,8 @@ export class Crossword extends React.Component {
         activeEntry = this.state.entries[activeEntryIndex];
         activeCellIndex = activeEntry.cells.length - 1;
       }
+      this.state.hubConnection.invoke('updateCell', activeRow, activeCol, ' ');
       this.setState({
-        grid: grid,
         activeEntryIndex: activeEntryIndex,
         activeCellIndex: activeCellIndex,
       });
