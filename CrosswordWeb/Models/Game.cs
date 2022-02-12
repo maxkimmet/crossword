@@ -11,7 +11,20 @@ public class Game
     {
         this.Id = gameId;
         string? crosswordData = Game.GetCrosswordString(crosswordDate);
-        this.ActiveCrossword = JsonSerializer.Deserialize<Crossword>(crosswordData!);
+        Crossword? crossword = JsonSerializer.Deserialize<Crossword>(crosswordData);
+
+        // Replace all letters in crossword with spaces
+        for (int i = 0; i < crossword.grid.Length; i++)
+        {
+            for (int j = 0; j < crossword.grid[i].Length; j++)
+            {
+                if (crossword.grid[i][j] != '#')
+                {
+                    crossword.grid[i][j] = ' ';
+                }
+            }
+        }
+        this.ActiveCrossword = crossword;
     }
 
     public static string? GetCrosswordString(string crosswordDate)
