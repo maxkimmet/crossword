@@ -233,6 +233,7 @@ export class Crossword extends React.Component {
 
       this.state.hubConnection.on('renderGrid', grid => {
         this.setState({ grid: grid });
+        this.runWinCheck();
       });
     });
   }
@@ -292,6 +293,16 @@ export class Crossword extends React.Component {
     this.setState({
       errors: errors,
     });
+  }
+
+  runWinCheck() {
+    if (!this.state.complete && JSON.stringify(this.state.grid) === JSON.stringify(this.state.solution)) {
+      clearInterval(this.timerID);  // Stop timer
+      this.setState({
+        complete: true,
+        showWinModal: true,
+      });
+    }
   }
 
   goToEntry(name) {
@@ -456,15 +467,6 @@ export class Crossword extends React.Component {
       preventDefault = false;
     }
     if (preventDefault) { event.preventDefault(); }
-
-    // Check if crossword is complete for first time
-    if (!this.state.complete && JSON.stringify(this.state.grid) === JSON.stringify(this.state.solution)) {
-      clearInterval(this.timerID);  // Stop timer
-      this.setState({
-        complete: true,
-        showWinModal: true,
-      });
-    }
   }
 
   render() {
