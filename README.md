@@ -7,7 +7,7 @@ I started doing crosswords with a few of my friends near the beginning of the CO
 1. Mobile support
 2. Multiplayer without sign-up
 3. Multiplayer with unlimited players
-4. American-style, densely-packed 15x15 crosswords where all letters are part of both a horizontal and vertical clue
+4. American style, densely-packed 15x15 crosswords where all letters are part of both a horizontal and vertical clue
 
 This project is also an excuse for me to learn modern frameworks. The website uses .NET Core and React while the crossword generator is written in Python.
 
@@ -29,6 +29,6 @@ This project is also an excuse for me to learn modern frameworks. The website us
     - Keyboard does not appear on load
 - Multiplayer
     <!-- - Issue with input before connection to hub -->
-    - Error checking causes remote inputs to render as errors
+    <!-- - Error checking causes remote inputs to render as errors -->
     - Timers are inconsistent across users
     - Expired sessions do not indicate that the connection has failed

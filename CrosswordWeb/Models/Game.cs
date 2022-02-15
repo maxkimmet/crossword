@@ -13,7 +13,20 @@ public class Game
         string? crosswordData = Game.GetCrosswordString(crosswordDate);
         Crossword? crossword = JsonSerializer.Deserialize<Crossword>(crosswordData);
 
-        // Replace all letters in crossword with spaces
+        // Initialize grid of crossword errors to falses
+        crossword.errors = new bool[crossword.height][];
+        for (int i = 0; i < crossword.errors.Length; i++)
+            crossword.errors[i] = new bool[crossword.width];
+
+        // Deep copy grid with answers to solution
+        // ...Hacky workaround since grid contains solution and will be cleared
+        crossword.solution = new char[crossword.height][];
+        for (int i = 0; i < crossword.grid!.Length; i++)
+        {
+            crossword.solution[i] = (char[])crossword.grid[i].Clone();
+        }
+
+        // Replace all letters in grid with spaces
         for (int i = 0; i < crossword.grid.Length; i++)
         {
             for (int j = 0; j < crossword.grid[i].Length; j++)

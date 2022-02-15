@@ -286,15 +286,7 @@ export class Crossword extends React.Component {
   }
 
   runErrorCheck() {
-    let errors = this.state.errors;
-    for (let i = 0; i < this.state.height; i++) {
-      for (let j = 0; j < this.state.width; j++) {
-        errors[i][j] = (this.state.grid[i][j] !== this.state.solution[i][j]);
-      }
-    }
-    this.setState({
-      errors: errors,
-    });
+    this.state.hubConnection.invoke('updateErrors');
   }
 
   runWinCheck() {
@@ -541,7 +533,7 @@ export class Crossword extends React.Component {
               </tbody>
             </table>
           </div>
-          {/* <ErrorButton onMouseDown={this.runErrorCheck} /> */}
+          <ErrorButton onMouseDown={this.runErrorCheck} />
         </div>
       </div>
     );

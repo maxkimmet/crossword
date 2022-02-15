@@ -62,9 +62,25 @@ public class CrosswordHub : Hub<ICrosswordClient>
         }
     }
 
-    public async Task UpdateGrid() {
+    public async Task UpdateGrid()
+    {
         Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
-        await Clients.Group(game.Id).RenderGrid(game.ActiveCrossword.grid, game.ActiveCrossword.errors);
+        Crossword.Models.Crossword crossword = game.ActiveCrossword!;
+        await Clients.Group(game.Id).RenderGrid(crossword.grid!, crossword.errors!);
+    }
+
+    public async Task UpdateErrors()
+    {
+        Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
+        Crossword.Models.Crossword crossword = game.ActiveCrossword!;
+        for (int i = 0; i < crossword.grid!.Length; i++)
+        {
+            for (int j = 0; j < crossword.grid[i].Length; j++)
+            {
+                crossword.errors![i][j] = (crossword.grid[i][j] != crossword.solution![i][j]);
+            }
+        }
+        await Clients.Group(game.Id).RenderGrid(crossword.grid, crossword.errors!);
     }
 
     public override async Task OnConnectedAsync()

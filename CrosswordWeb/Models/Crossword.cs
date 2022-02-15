@@ -16,5 +16,7 @@ public class Crossword
     public int height { get; set; }
     public int width { get; set; }
     public char[][]? grid { get; set; }
+    public char[][]? solution { get; set; }
+    public bool[][]? errors {get; set;}
     public List<Entry>? entries { get; set; }
 }
