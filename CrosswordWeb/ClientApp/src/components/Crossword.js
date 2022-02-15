@@ -1,8 +1,6 @@
 import React from 'react';
-import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@microsoft/signalr'
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import './Crossword.css';
-
-// TODO: Prevent user interaction before connection to hub, indicate when connecting
 
 function Header(props) {
   return (
@@ -27,7 +25,7 @@ function WinModal(props) {
     <div className="modalContainer">
       <div className="modal">
         <h3>Congration, you done it!</h3>
-        <h5>Crossword completed in {props.time.toISOString().substring(12, 19)}</h5>
+        {/* <h5>Crossword completed in {props.time.toISOString().substring(12, 19)}</h5> */}
         <button className="btn-close" onClick={props.onClick}></button>
       </div>
     </div>
@@ -192,15 +190,17 @@ export class Crossword extends React.Component {
 
     this.toggleWinModal = this.toggleWinModal.bind(this);
     this.runErrorCheck = this.runErrorCheck.bind(this);
+    this.refocus = this.refocus.bind(this);
     this.goToEntry = this.goToEntry.bind(this);
     this.goToCell = this.goToCell.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    this.loadCrossword();
-    this.openHubConnection();
+  async componentDidMount() {
+    await this.openHubConnection();
+    await this.loadCrossword();
+    this.state.hubConnection.invoke('updateGrid');
   }
 
   componentWillUnmount() {
@@ -214,25 +214,27 @@ export class Crossword extends React.Component {
       .configureLogging(LogLevel.Information)
       .build();
 
-    this.setState({ hubConnection }, () => {
-      this.state.hubConnection
-        .start()
-        .then(() => {
-          let { date, gameId } = this.props.match.params;
-          if (gameId) {
-            this.state.hubConnection.invoke('joinGame', gameId);
-          } else {
-            this.state.hubConnection.invoke('createGame', date);
-          }
-        })
-        .catch(err => console.log("Error establishing connection"));
+    await hubConnection.start()
+      .then(() => {
+        let { date, gameId } = this.props.match.params;
+        if (gameId) {
+          hubConnection.invoke('joinGame', gameId);
+        } else {
+          hubConnection.invoke('createGame', date);
+        }
+      })
+      .catch(err => console.log("Error establishing connection"));
 
+    this.setState({ hubConnection }, () => {
       this.state.hubConnection.on('updateUrl', gameId => {
         window.history.replaceState("", "", `${window.location.pathname}/${gameId}`);
-      })
+      });
 
-      this.state.hubConnection.on('renderGrid', grid => {
-        this.setState({ grid: grid });
+      this.state.hubConnection.on('renderGrid', (grid, errors) => {
+        this.setState({
+          grid: grid,
+          errors: errors,
+        });
         this.runWinCheck();
       });
     });
@@ -268,7 +270,7 @@ export class Crossword extends React.Component {
         Array.from({ length: data.width }, () => false)
       ),
     });
-    this.inputElement.current.focus();
+    this.refocus();
   }
 
   tick() {
@@ -305,6 +307,10 @@ export class Crossword extends React.Component {
     }
   }
 
+  refocus() {
+    this.inputElement.current.focus();
+  }
+
   goToEntry(name) {
     let activeEntryIndex = -1;
     for (let i = 0; i < this.state.entries.length; i++) {
@@ -323,14 +329,14 @@ export class Crossword extends React.Component {
       activeEntryIndex: activeEntryIndex,
       activeCellIndex: 0,
     });
-    this.inputElement.current.focus();
+    this.refocus();
 
     return true;
   }
 
   goToCell(row, col) {
     // Focus on cell to force keyboard to pop up on mobile
-    this.inputElement.current.focus();
+    this.refocus();
 
     const possibleEntries = this.state.entries.filter(entry => includesArray(entry.cells, [row, col]));
 
@@ -411,7 +417,7 @@ export class Crossword extends React.Component {
         activeEntry = this.state.entries[activeEntryIndex];
         activeCellIndex = 0;
       }
-      this.state.hubConnection.invoke('updateCell', activeRow, activeCol, value);
+      this.state.hubConnection?.invoke('updateCell', activeRow, activeCol, value);
       this.setState({
         errors: errors,
         activeEntryIndex: activeEntryIndex,
@@ -429,7 +435,7 @@ export class Crossword extends React.Component {
         activeEntry = this.state.entries[activeEntryIndex];
         activeCellIndex = activeEntry.cells.length - 1;
       }
-      this.state.hubConnection.invoke('updateCell', activeRow, activeCol, ' ');
+      this.state.hubConnection?.invoke('updateCell', activeRow, activeCol, ' ');
       this.setState({
         activeEntryIndex: activeEntryIndex,
         activeCellIndex: activeCellIndex,
@@ -473,7 +479,7 @@ export class Crossword extends React.Component {
     const activeEntry = this.state.entries[this.state.activeEntryIndex];
 
     return (
-      <div className="game-wrapper" onClick={() => this.inputElement.current.focus()}>
+      <div className="game-wrapper" onClick={() => this.refocus()}>
         {this.state.showWinModal &&
           <WinModal
             time={this.state.time}
@@ -486,7 +492,7 @@ export class Crossword extends React.Component {
             author={this.state.author}
             date={this.state.date}
           />
-          <Timer time={this.state.time} />
+          {/* <Timer time={this.state.time} /> */}
           <HiddenInput
             inputRef={this.inputElement}
             onChange={this.handleChange}
@@ -535,7 +541,7 @@ export class Crossword extends React.Component {
               </tbody>
             </table>
           </div>
-          <ErrorButton onMouseDown={this.runErrorCheck} />
+          {/* <ErrorButton onMouseDown={this.runErrorCheck} /> */}
         </div>
       </div>
     );

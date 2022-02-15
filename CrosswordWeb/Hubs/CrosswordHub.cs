@@ -6,7 +6,7 @@ namespace Crossword.Hubs;
 public interface ICrosswordClient
 {
     Task UpdateUrl(string gameId);
-    Task RenderGrid(char[][] grid);
+    Task RenderGrid(char[][] grid, bool[][] errors);
 }
 
 public class CrosswordHub : Hub<ICrosswordClient>
@@ -49,9 +49,6 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
         // Add player to hub group for game
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
-
-        // Render grid for player
-        await Clients.Client(Context.ConnectionId).RenderGrid(game.ActiveCrossword.grid);
     }
 
     public async Task UpdateCell(int row, int col, char value)
@@ -60,8 +57,14 @@ public class CrosswordHub : Hub<ICrosswordClient>
         if (game.ActiveCrossword != null)
         {
             game.ActiveCrossword.grid![row][col] = value;
-            await Clients.Group(game.Id).RenderGrid(game.ActiveCrossword.grid);
+            game.ActiveCrossword.errors![row][col] = false;
+            await Clients.Group(game.Id).RenderGrid(game.ActiveCrossword.grid, game.ActiveCrossword.errors);
         }
+    }
+
+    public async Task UpdateGrid() {
+        Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
+        await Clients.Group(game.Id).RenderGrid(game.ActiveCrossword.grid, game.ActiveCrossword.errors);
     }
 
     public override async Task OnConnectedAsync()
