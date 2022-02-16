@@ -11,7 +11,7 @@ I started doing crosswords with a few of my friends near the beginning of the CO
 
 This project is also an excuse for me to learn modern frameworks. The website uses .NET Core and React while the crossword generator is written in Python.
 
-## Features coming soon, allegedly
+## Features coming soon
 - Algorithm
     - Difficulty adjustment
     - Custom crossword clues
@@ -23,12 +23,8 @@ This project is also an excuse for me to learn modern frameworks. The website us
 
 ## Known bugs
 - Mobile
-    - Scrolling issue on iOS Safari
     - Inputs are discarded on Android when typing quickly
-    <!-- - Double tap on cell opens copy/paste dialog -->
     - Keyboard does not appear on load
 - Multiplayer
-    <!-- - Issue with input before connection to hub -->
-    <!-- - Error checking causes remote inputs to render as errors -->
     - Timers are inconsistent across users
     - Expired sessions do not indicate that the connection has failed
