@@ -25,7 +25,7 @@ This project is also an excuse for me to learn modern frameworks. The website us
 - Mobile
     - Scrolling issue on iOS Safari
     - Inputs are discarded on Android when typing quickly
-    - Double tap on cell opens copy/paste dialog
+    <!-- - Double tap on cell opens copy/paste dialog -->
     - Keyboard does not appear on load
 - Multiplayer
     <!-- - Issue with input before connection to hub -->
