@@ -71,11 +71,7 @@ function Cell(props) {
   return (
     <td onClick={props.onClick}>
       <span className="cell-annotation">{props.annotation}</span>
-      <div
-        className="unselectable-cell"
-        // readOnly={true}
-        // value={value}
-      >
+      <div className="unselectable-cell">
         <span className={classes}>{value}</span>
       </div>
     </td>
