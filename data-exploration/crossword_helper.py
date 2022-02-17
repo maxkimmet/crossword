@@ -6,6 +6,7 @@ import json
 
 from numpy import inf
 
+
 class Crossword:
     """Used to generate a crossword based on a config file and list of possible clues.
 
@@ -84,7 +85,7 @@ class Crossword:
                 if entry1 != entry2:
                     entry1.update_overlap(entry2)
 
-    def generate(self, out_file="", used_words=[]):
+    def generate(self, out_file: str = "", used_words: set[str] = set()):
         # Generate crossword
         if self._generate(used_words) is not None:
             Exception("Crossword could not be generated with word list")
@@ -98,7 +99,7 @@ class Crossword:
         if out_file:
             self.export(out_file)
 
-    def _generate(self, used_words=[], print_grid=True) -> Optional[Entry]:
+    def _generate(self, used_words: set[str] = set(), print_grid: bool = True) -> Optional[Entry]:
         # Get entries not yet assigned a clue
         possible_entries = [e for e in self.entries if not e.clue]
 
@@ -134,7 +135,7 @@ class Crossword:
         for clue in entry.sorted_clues():
             # Assign word to entry and remove from possible words
             entry.clue = clue
-            used_words.append(clue.answer)
+            used_words.add(clue.answer)
 
             # Generate and print grid if flag is set
             if print_grid:
@@ -152,7 +153,7 @@ class Crossword:
 
             # Remove clue from entry and answer from used words
             entry.clue = None
-            used_words = used_words[:-1]
+            used_words.remove(clue.answer)
 
             # Continue backtracking if entry isn't constrained by failing entry
             if failed_entry not in entry.overlaps:
@@ -219,7 +220,7 @@ class Entry:
                 if self.cells[i] == other.cells[j]:
                     self.overlaps[other] = (i, j)
 
-    def update_constraints(self, used_words) -> None:
+    def update_constraints(self, used_words: set[str]) -> None:
         self.constraints = []
         for other, indices in self.overlaps.items():
             if other.clue:
