@@ -1,91 +1,91 @@
 {
-  "title": "Crossword Bot, Unedited",
+  "title": "Crossword Bot, Slightly Edited",
   "author": "Crossword Bot",
-  "date": "2022-02-11",
+  "date": "2022-02-17",
   "height": 15,
   "width": 15,
   "grid": [
     [
-      "R",
-      "E",
       "B",
       "A",
+      "J",
+      "A",
       "#",
-      "O",
-      "G",
-      "R",
+      "A",
+      "D",
+      "I",
       "E",
-      "S",
+      "U",
       "#",
-      "A",
-      "R",
-      "A",
+      "B",
+      "T",
+      "U",
       "S"
     ],
     [
-      "O",
-      "R",
+      "E",
+      "T",
       "A",
       "L",
       "#",
-      "L",
-      "E",
-      "A",
-      "R",
-      "Y",
-      "#",
-      "B",
-      "A",
-      "B",
-      "A"
-    ],
-    [
-      "B",
-      "E",
-      "H",
+      "M",
       "I",
       "N",
       "D",
-      "T",
-      "H",
+      "S",
+      "#",
       "E",
       "S",
-      "C",
+      "T",
+      "O"
+    ],
+    [
+      "N",
+      "O",
+      "M",
+      "A",
+      "N",
+      "I",
+      "S",
+      "A",
+      "N",
+      "I",
+      "S",
+      "L",
+      "A",
+      "N",
+      "D"
+    ],
+    [
       "E",
       "N",
+      "S",
+      "#",
+      "E",
+      "T",
+      "C",
+      "#",
+      "A",
+      "N",
+      "T",
+      "A",
+      "R",
       "E",
       "S"
     ],
     [
+      "T",
       "E",
-      "W",
-      "A",
-      "#",
       "E",
-      "I",
+      "N",
       "S",
+      "Y",
       "#",
-      "C",
       "O",
-      "L",
-      "T",
-      "I",
-      "S",
-      "H"
-    ],
-    [
-      "S",
-      "E",
-      "M",
-      "I",
-      "T",
-      "E",
-      "#",
-      "S",
-      "T",
-      "P",
+      "F",
+      "G",
       "A",
-      "T",
+      "B",
       "#",
       "#",
       "#"
@@ -93,85 +93,85 @@
     [
       "#",
       "#",
-      "A",
       "S",
-      "S",
+      "E",
+      "T",
       "#",
-      "P",
-      "H",
-      "O",
-      "#",
-      "S",
-      "A",
       "L",
-      "M",
-      "A"
+      "T",
+      "E",
+      "#",
+      "B",
+      "O",
+      "T",
+      "O",
+      "X"
     ],
     [
-      "H",
+      "E",
       "A",
-      "M",
-      "M",
-      "#",
-      "P",
-      "O",
-      "E",
-      "R",
-      "E",
-      "P",
-      "L",
-      "I",
-      "E",
-      "R"
-    ],
-    [
-      "I",
-      "R",
-      "A",
-      "#",
-      "A",
-      "R",
-      "R",
-      "E",
       "S",
       "T",
-      "S",
       "#",
-      "P",
+      "B",
+      "A",
       "R",
+      "R",
+      "E",
+      "L",
+      "R",
+      "O",
+      "L",
+      "L"
+    ],
+    [
+      "S",
+      "D",
+      "I",
+      "#",
+      "S",
+      "A",
+      "V",
+      "A",
+      "B",
+      "L",
+      "E",
+      "#",
+      "M",
+      "O",
       "I"
     ],
     [
-      "F",
-      "A",
-      "M",
-      "I",
+      "P",
+      "R",
+      "O",
+      "P",
+      "P",
       "L",
-      "Y",
-      "T",
-      "R",
-      "E",
-      "E",
-      "#",
-      "R",
-      "S",
-      "V",
-      "P"
-    ],
-    [
-      "I",
-      "B",
       "A",
-      "R",
+      "N",
+      "E",
       "S",
-      "#",
-      "F",
-      "A",
-      "T",
       "#",
       "A",
       "C",
+      "T",
+      "I"
+    ],
+    [
+      "N",
+      "A",
+      "N",
+      "C",
       "E",
+      "#",
+      "L",
+      "T",
+      "R",
+      "#",
+      "E",
+      "G",
+      "O",
       "#",
       "#"
     ],
@@ -179,93 +179,93 @@
       "#",
       "#",
       "#",
-      "A",
+      "W",
       "A",
       "R",
+      "I",
       "O",
-      "N",
       "#",
-      "I",
-      "N",
+      "P",
       "A",
-      "R",
-      "U",
-      "T"
-    ],
-    [
-      "S",
-      "T",
       "E",
-      "N",
-      "C",
-      "I",
       "L",
-      "#",
-      "A",
-      "N",
-      "T",
-      "#",
-      "V",
-      "I",
+      "L",
       "A"
     ],
     [
+      "O",
+      "S",
+      "B",
+      "O",
+      "R",
+      "N",
+      "E",
+      "#",
+      "A",
+      "E",
+      "R",
+      "#",
       "L",
       "A",
-      "D",
-      "I",
-      "E",
-      "S",
-      "I",
-      "N",
-      "W",
-      "A",
-      "I",
+      "L"
+    ],
+    [
       "T",
+      "E",
+      "A",
+      "R",
+      "S",
+      "A",
+      "R",
+      "E",
+      "F",
+      "A",
+      "L",
+      "L",
       "I",
       "N",
       "G"
     ],
     [
-      "O",
+      "T",
+      "E",
       "L",
-      "G",
-      "A",
+      "L",
       "#",
-      "K",
-      "O",
+      "S",
+      "E",
       "R",
-      "A",
-      "N",
+      "T",
+      "S",
       "#",
       "E",
-      "C",
-      "T",
-      "O"
+      "N",
+      "N",
+      "A"
     ],
     [
-      "T",
+      "O",
+      "P",
       "E",
-      "E",
-      "N",
+      "D",
       "#",
-      "Y",
+      "E",
+      "S",
       "S",
       "A",
       "Y",
-      "E",
       "#",
-      "L",
-      "E",
       "A",
-      "N"
+      "S",
+      "Y",
+      "E"
     ]
   ],
   "entries": [
     {
       "name": "A01",
-      "word": "REBA",
-      "clue": "Singer McEntire",
+      "word": "BAJA",
+      "clue": "____ California",
       "cells": [
         [
           0,
@@ -287,8 +287,8 @@
     },
     {
       "name": "A05",
-      "word": "OGRES",
-      "clue": "Monsters",
+      "word": "ADIEU",
+      "clue": "Parting word",
       "cells": [
         [
           0,
@@ -314,8 +314,8 @@
     },
     {
       "name": "A10",
-      "word": "ARAS",
-      "clue": "Turkish river",
+      "word": "BTUS",
+      "clue": "A/C units",
       "cells": [
         [
           0,
@@ -337,8 +337,8 @@
     },
     {
       "name": "A14",
-      "word": "ORAL",
-      "clue": "Spoken",
+      "word": "ETAL",
+      "clue": "List-ending abbr",
       "cells": [
         [
           1,
@@ -360,8 +360,8 @@
     },
     {
       "name": "A15",
-      "word": "LEARY",
-      "clue": "Rescue Me star Denis",
+      "word": "MINDS",
+      "clue": "Intellects",
       "cells": [
         [
           1,
@@ -387,8 +387,8 @@
     },
     {
       "name": "A16",
-      "word": "BABA",
-      "clue": "Rum cake",
+      "word": "ESTO",
+      "clue": "This, in Tijuana",
       "cells": [
         [
           1,
@@ -410,8 +410,8 @@
     },
     {
       "name": "A17",
-      "word": "BEHINDTHESCENES",
-      "clue": "Out of public view",
+      "word": "NOMANISANISLAND",
+      "clue": "Words from Donne",
       "cells": [
         [
           2,
@@ -477,8 +477,8 @@
     },
     {
       "name": "A20",
-      "word": "EWA",
-      "clue": "____ Beach, Hawaii",
+      "word": "ENS",
+      "clue": "USNA grad",
       "cells": [
         [
           3,
@@ -496,8 +496,8 @@
     },
     {
       "name": "A21",
-      "word": "EIS",
-      "clue": "Frozen Wasser",
+      "word": "ETC",
+      "clue": "Catchall abbr",
       "cells": [
         [
           3,
@@ -515,8 +515,8 @@
     },
     {
       "name": "A22",
-      "word": "COLTISH",
-      "clue": "Frisky",
+      "word": "ANTARES",
+      "clue": "Star in Scorpio",
       "cells": [
         [
           3,
@@ -550,8 +550,8 @@
     },
     {
       "name": "A23",
-      "word": "SEMITE",
-      "clue": "Israeli or Arab",
+      "word": "TEENSY",
+      "clue": "Itty-bitty",
       "cells": [
         [
           4,
@@ -581,8 +581,8 @@
     },
     {
       "name": "A25",
-      "word": "STPAT",
-      "clue": "Mar. honoree",
+      "word": "OFGAB",
+      "clue": "Gift ____",
       "cells": [
         [
           4,
@@ -608,8 +608,8 @@
     },
     {
       "name": "A26",
-      "word": "ASS",
-      "clue": "Beast of burden",
+      "word": "SET",
+      "clue": "Harden",
       "cells": [
         [
           5,
@@ -627,8 +627,8 @@
     },
     {
       "name": "A27",
-      "word": "PHO",
-      "clue": "Vietnamese soup",
+      "word": "LTE",
+      "clue": "Wireless technology preceding 5G",
       "cells": [
         [
           5,
@@ -646,8 +646,8 @@
     },
     {
       "name": "A28",
-      "word": "SALMA",
-      "clue": "Actress Hayek",
+      "word": "BOTOX",
+      "clue": "Wrinkle remover",
       "cells": [
         [
           5,
@@ -673,8 +673,8 @@
     },
     {
       "name": "A32",
-      "word": "HAMM",
-      "clue": "Soccer star Mia",
+      "word": "EAST",
+      "clue": "Bridge position",
       "cells": [
         [
           6,
@@ -696,8 +696,8 @@
     },
     {
       "name": "A34",
-      "word": "POEREPLIER",
-      "clue": "Someone who answers the author of \"The Gold-Bug\"",
+      "word": "BARRELROLL",
+      "clue": "Aerobatic maneuver",
       "cells": [
         [
           6,
@@ -743,8 +743,8 @@
     },
     {
       "name": "A36",
-      "word": "IRA",
-      "clue": "Lyricist Gershwin",
+      "word": "SDI",
+      "clue": "Star Wars initials",
       "cells": [
         [
           7,
@@ -762,8 +762,8 @@
     },
     {
       "name": "A37",
-      "word": "ARRESTS",
-      "clue": "Takes into custody",
+      "word": "SAVABLE",
+      "clue": "Not a lost cause",
       "cells": [
         [
           7,
@@ -797,8 +797,8 @@
     },
     {
       "name": "A38",
-      "word": "PRI",
-      "clue": "Vicente Fox ended their 71-year reign in Mexico",
+      "word": "MOI",
+      "clue": "French pronoun",
       "cells": [
         [
           7,
@@ -816,8 +816,8 @@
     },
     {
       "name": "A39",
-      "word": "FAMILYTREE",
-      "clue": "Genealogical chart",
+      "word": "PROPPLANES",
+      "clue": "Old barnstorming needs",
       "cells": [
         [
           8,
@@ -863,8 +863,8 @@
     },
     {
       "name": "A41",
-      "word": "RSVP",
-      "clue": "Invitation letters",
+      "word": "ACTI",
+      "clue": "Play opener",
       "cells": [
         [
           8,
@@ -886,8 +886,8 @@
     },
     {
       "name": "A42",
-      "word": "IBARS",
-      "clue": "Building beams",
+      "word": "NANCE",
+      "clue": "John ____ Garner",
       "cells": [
         [
           9,
@@ -913,8 +913,8 @@
     },
     {
       "name": "A43",
-      "word": "FAT",
-      "clue": "Budgetary excess",
+      "word": "LTR",
+      "clue": "USPS delivery",
       "cells": [
         [
           9,
@@ -932,8 +932,8 @@
     },
     {
       "name": "A44",
-      "word": "ACE",
-      "clue": "Expert",
+      "word": "EGO",
+      "clue": "Self",
       "cells": [
         [
           9,
@@ -951,8 +951,8 @@
     },
     {
       "name": "A45",
-      "word": "AARON",
-      "clue": "Composer Copland",
+      "word": "WARIO",
+      "clue": "Similarly named rival of a video game plumber",
       "cells": [
         [
           10,
@@ -978,8 +978,8 @@
     },
     {
       "name": "A47",
-      "word": "INARUT",
-      "clue": "Going nowhere",
+      "word": "PAELLA",
+      "clue": "Spanish rice dish",
       "cells": [
         [
           10,
@@ -1009,8 +1009,8 @@
     },
     {
       "name": "A50",
-      "word": "STENCIL",
-      "clue": "Letter-writing guide",
+      "word": "OSBORNE",
+      "clue": "Look Back in Anger playwright John",
       "cells": [
         [
           11,
@@ -1044,8 +1044,8 @@
     },
     {
       "name": "A53",
-      "word": "ANT",
-      "clue": "Picnic pest",
+      "word": "AER",
+      "clue": "____ Lingus",
       "cells": [
         [
           11,
@@ -1063,8 +1063,8 @@
     },
     {
       "name": "A54",
-      "word": "VIA",
-      "clue": "By way of",
+      "word": "LAL",
+      "clue": "Former Indian P.M. Shastri",
       "cells": [
         [
           11,
@@ -1082,8 +1082,8 @@
     },
     {
       "name": "A55",
-      "word": "LADIESINWAITING",
-      "clue": "Queen's attendants",
+      "word": "TEARSAREFALLING",
+      "clue": "'85 Kiss \"Asylum\" hit",
       "cells": [
         [
           12,
@@ -1149,8 +1149,8 @@
     },
     {
       "name": "A58",
-      "word": "OLGA",
-      "clue": "Gymnast Korbut",
+      "word": "TELL",
+      "clue": "Spill the beans",
       "cells": [
         [
           13,
@@ -1172,8 +1172,8 @@
     },
     {
       "name": "A59",
-      "word": "KORAN",
-      "clue": "Islamic text",
+      "word": "SERTS",
+      "clue": "Some Spanish murals",
       "cells": [
         [
           13,
@@ -1199,8 +1199,8 @@
     },
     {
       "name": "A60",
-      "word": "ECTO",
-      "clue": "Prefix with plasm",
+      "word": "ENNA",
+      "clue": "Sicilian city",
       "cells": [
         [
           13,
@@ -1222,8 +1222,8 @@
     },
     {
       "name": "A61",
-      "word": "TEEN",
-      "clue": "Adolescent",
+      "word": "OPED",
+      "clue": "Newspaper page",
       "cells": [
         [
           14,
@@ -1245,8 +1245,8 @@
     },
     {
       "name": "A62",
-      "word": "YSAYE",
-      "clue": "See 52 Down",
+      "word": "ESSAY",
+      "clue": "Opinion piece",
       "cells": [
         [
           14,
@@ -1272,8 +1272,8 @@
     },
     {
       "name": "A63",
-      "word": "LEAN",
-      "clue": "Spare",
+      "word": "ASYE",
+      "clue": "____ sow, so shall...",
       "cells": [
         [
           14,
@@ -1295,8 +1295,8 @@
     },
     {
       "name": "D01",
-      "word": "ROBES",
-      "clue": "Choir attire",
+      "word": "BENET",
+      "clue": "John Brown's Body poet",
       "cells": [
         [
           0,
@@ -1322,8 +1322,8 @@
     },
     {
       "name": "D02",
-      "word": "EREWE",
-      "clue": "Maid of Athens, ____ part: Byron",
+      "word": "ATONE",
+      "clue": "Make amends",
       "cells": [
         [
           0,
@@ -1349,8 +1349,8 @@
     },
     {
       "name": "D03",
-      "word": "BAHAMAMAMA",
-      "clue": "Tropical drink",
+      "word": "JAMSESSION",
+      "clue": "Impromptu jazz performance",
       "cells": [
         [
           0,
@@ -1396,8 +1396,8 @@
     },
     {
       "name": "D04",
-      "word": "ALI",
-      "clue": "____ Baba",
+      "word": "ALA",
+      "clue": "In the style of",
       "cells": [
         [
           0,
@@ -1415,8 +1415,8 @@
     },
     {
       "name": "D05",
-      "word": "OLDIE",
-      "clue": "Blast from the past",
+      "word": "AMITY",
+      "clue": "Friendship",
       "cells": [
         [
           0,
@@ -1442,8 +1442,8 @@
     },
     {
       "name": "D06",
-      "word": "GETS",
-      "clue": "Understands",
+      "word": "DISC",
+      "clue": "Record",
       "cells": [
         [
           0,
@@ -1465,8 +1465,8 @@
     },
     {
       "name": "D07",
-      "word": "RAH",
-      "clue": "Cheer",
+      "word": "INA",
+      "clue": "____ pig's eye!",
       "cells": [
         [
           0,
@@ -1484,8 +1484,8 @@
     },
     {
       "name": "D08",
-      "word": "ERECTORSET",
-      "clue": "Construction toy",
+      "word": "EDNAFERBER",
+      "clue": "Show Boat author",
       "cells": [
         [
           0,
@@ -1531,8 +1531,8 @@
     },
     {
       "name": "D09",
-      "word": "SYSOP",
-      "clue": "Online VIP",
+      "word": "USING",
+      "clue": "Taking advantage of",
       "cells": [
         [
           0,
@@ -1558,8 +1558,8 @@
     },
     {
       "name": "D10",
-      "word": "ABETTAL",
-      "clue": "Support of wrongdoing",
+      "word": "BELABOR",
+      "clue": "Harp on",
       "cells": [
         [
           0,
@@ -1593,8 +1593,8 @@
     },
     {
       "name": "D11",
-      "word": "RANI",
-      "clue": "Indian princess",
+      "word": "TSAR",
+      "clue": "Autocrat",
       "cells": [
         [
           0,
@@ -1616,8 +1616,8 @@
     },
     {
       "name": "D12",
-      "word": "ABES",
-      "clue": "Fivers",
+      "word": "UTNE",
+      "clue": "____ Reader",
       "cells": [
         [
           0,
@@ -1639,8 +1639,8 @@
     },
     {
       "name": "D13",
-      "word": "SASH",
-      "clue": "Window part",
+      "word": "SODS",
+      "clue": "Lays down the lawn",
       "cells": [
         [
           0,
@@ -1662,8 +1662,8 @@
     },
     {
       "name": "D18",
-      "word": "NETS",
-      "clue": "Butterfly catchers",
+      "word": "NEST",
+      "clue": "Hatchling's home",
       "cells": [
         [
           2,
@@ -1685,8 +1685,8 @@
     },
     {
       "name": "D19",
-      "word": "CLASPS",
-      "clue": "Necklace fasteners",
+      "word": "STABLE",
+      "clue": "Horse house",
       "cells": [
         [
           2,
@@ -1716,8 +1716,8 @@
     },
     {
       "name": "D24",
-      "word": "ISM",
-      "clue": "Doctrine",
+      "word": "NET",
+      "clue": "Bottom line",
       "cells": [
         [
           4,
@@ -1735,8 +1735,8 @@
     },
     {
       "name": "D25",
-      "word": "SHEERAN",
-      "clue": "Sing singer Ed",
+      "word": "OTRANTO",
+      "clue": "Adriatic strait",
       "cells": [
         [
           4,
@@ -1770,8 +1770,8 @@
     },
     {
       "name": "D27",
-      "word": "PORTFOLIOS",
-      "clue": "Stock holders",
+      "word": "LAVALIERES",
+      "clue": "Some microphones",
       "cells": [
         [
           5,
@@ -1817,8 +1817,8 @@
     },
     {
       "name": "D29",
-      "word": "LIPSERVICE",
-      "clue": "Insincere talk",
+      "word": "TOMCOLLINS",
+      "clue": "Gin cocktail",
       "cells": [
         [
           5,
@@ -1864,8 +1864,8 @@
     },
     {
       "name": "D30",
-      "word": "MERV",
-      "clue": "Jeopardy! creator Griffin",
+      "word": "OLOT",
+      "clue": "People of Mongolia",
       "cells": [
         [
           5,
@@ -1887,8 +1887,8 @@
     },
     {
       "name": "D31",
-      "word": "ARIP",
-      "clue": "What ____!: \"I've been had!\"",
+      "word": "XLII",
+      "clue": "Forty-two",
       "cells": [
         [
           5,
@@ -1910,8 +1910,8 @@
     },
     {
       "name": "D32",
-      "word": "HIFI",
-      "clue": "LP player",
+      "word": "ESPN",
+      "clue": "Armchair athlete's channel",
       "cells": [
         [
           6,
@@ -1933,8 +1933,8 @@
     },
     {
       "name": "D33",
-      "word": "ARAB",
-      "clue": "Bedouin",
+      "word": "ADRA",
+      "clue": "Spanish seaport",
       "cells": [
         [
           6,
@@ -1956,8 +1956,8 @@
     },
     {
       "name": "D34",
-      "word": "PRY",
-      "clue": "Snoop",
+      "word": "BAL",
+      "clue": "____ Harbour, Fla",
       "cells": [
         [
           6,
@@ -1975,8 +1975,8 @@
     },
     {
       "name": "D35",
-      "word": "ETE",
-      "clue": "French season",
+      "word": "ELS",
+      "clue": "Golfer Ernie",
       "cells": [
         [
           6,
@@ -1994,8 +1994,8 @@
     },
     {
       "name": "D37",
-      "word": "ALSACE",
-      "clue": "____-Lorraine",
+      "word": "SPEARS",
+      "clue": "Asparagus units",
       "cells": [
         [
           7,
@@ -2025,8 +2025,8 @@
     },
     {
       "name": "D40",
-      "word": "IRANIAN",
-      "clue": "Shiraz resident",
+      "word": "PCWORLD",
+      "clue": "Popular tech magazine",
       "cells": [
         [
           8,
@@ -2060,8 +2060,8 @@
     },
     {
       "name": "D41",
-      "word": "RCA",
-      "clue": "Color TV pioneer",
+      "word": "AGE",
+      "clue": "Ripen",
       "cells": [
         [
           8,
@@ -2079,8 +2079,8 @@
     },
     {
       "name": "D44",
-      "word": "ANTI",
-      "clue": "Against",
+      "word": "EARL",
+      "clue": "Viscount's superior",
       "cells": [
         [
           9,
@@ -2102,8 +2102,8 @@
     },
     {
       "name": "D46",
-      "word": "RISKY",
-      "clue": "Hazardous",
+      "word": "RNASE",
+      "clue": "Genetic enzyme",
       "cells": [
         [
           10,
@@ -2129,8 +2129,8 @@
     },
     {
       "name": "D47",
-      "word": "INANE",
-      "clue": "Silly",
+      "word": "PEASY",
+      "clue": "Easy ____",
       "cells": [
         [
           10,
@@ -2156,8 +2156,8 @@
     },
     {
       "name": "D48",
-      "word": "UINTA",
-      "clue": "Utah range",
+      "word": "LANNY",
+      "clue": "Lawyer Davis who served in the Clinton and Bush administrations",
       "cells": [
         [
           10,
@@ -2183,8 +2183,8 @@
     },
     {
       "name": "D49",
-      "word": "TAGON",
-      "clue": "Append",
+      "word": "ALGAE",
+      "clue": "Seaweed",
       "cells": [
         [
           10,
@@ -2210,8 +2210,8 @@
     },
     {
       "name": "D50",
-      "word": "SLOT",
-      "clue": "Job opening",
+      "word": "OTTO",
+      "clue": "Director Preminger",
       "cells": [
         [
           11,
@@ -2233,8 +2233,8 @@
     },
     {
       "name": "D51",
-      "word": "TALE",
-      "clue": "Story",
+      "word": "SEEP",
+      "clue": "Ooze",
       "cells": [
         [
           11,
@@ -2256,8 +2256,8 @@
     },
     {
       "name": "D52",
-      "word": "EDGE",
-      "clue": "Advantage",
+      "word": "BALE",
+      "clue": "Hay unit",
       "cells": [
         [
           11,
@@ -2279,8 +2279,8 @@
     },
     {
       "name": "D53",
-      "word": "AWAY",
-      "clue": "On the road",
+      "word": "AFTA",
+      "clue": "Old Spice alternative",
       "cells": [
         [
           11,
@@ -2302,8 +2302,8 @@
     },
     {
       "name": "D56",
-      "word": "NRA",
-      "clue": "New Deal agcy",
+      "word": "ERS",
+      "clue": "Hosp. areas",
       "cells": [
         [
           12,
@@ -2321,8 +2321,8 @@
     },
     {
       "name": "D57",
-      "word": "TEL",
-      "clue": "____ Aviv",
+      "word": "LEA",
+      "clue": "Meadow",
       "cells": [
         [
           12,
