@@ -32,7 +32,7 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: 22px;
+  gap: 23px;
 }
 
 .clue-table td, th {
