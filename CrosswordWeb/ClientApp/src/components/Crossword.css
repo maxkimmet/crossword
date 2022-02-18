@@ -95,6 +95,10 @@
   background: #ccc;
 }
 
+.other-cursor-cell {
+  background: #aca;
+}
+
 .active-cell {
   background: #acc;
 }

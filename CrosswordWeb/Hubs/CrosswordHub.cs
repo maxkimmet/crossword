@@ -5,7 +5,9 @@ namespace Crossword.Hubs;
 
 public interface ICrosswordClient
 {
+    Task RegisterConnection(string connectionId);
     Task UpdateUrl(string gameId);
+    Task RenderCursors(Dictionary<string, int[]> cursorPositions);
     Task RenderGrid(char[][] grid, bool[][] errors);
 }
 
@@ -24,14 +26,15 @@ public class CrosswordHub : Hub<ICrosswordClient>
         Game game = new Game(gameId, crosswordDate);
 
         // Update dictionaries
-        Console.WriteLine(gameId);
         this._gameRepository.GameIdToGame[gameId] = game;
-        Console.WriteLine(this._gameRepository.GameIdToGame.Count);
         this._gameRepository.ConnectionToGame[Context.ConnectionId] = game;
         this._gameRepository.GameIdToConnections[gameId] = new List<string> { Context.ConnectionId };
 
         // Add player to hub group for game
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+
+        // Send client its connection ID
+        await Clients.Client(Context.ConnectionId).RegisterConnection(Context.ConnectionId);
 
         // Update client's URL
         await Clients.Client(Context.ConnectionId).UpdateUrl(gameId);
@@ -39,8 +42,6 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
     public async Task JoinGame(string gameId)
     {
-        Console.WriteLine(this._gameRepository.GameIdToGame.Count);
-
         Game game = this._gameRepository.GameIdToGame[gameId];
 
         // Update dictionaries
@@ -49,6 +50,15 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
         // Add player to hub group for game
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+
+        // Send client its connection ID
+        await Clients.Client(Context.ConnectionId).RegisterConnection(Context.ConnectionId);
+    }
+
+    public async Task UpdatePlayerCursor(int row, int col) {
+        Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
+        game.CursorPositions[Context.ConnectionId] = new int[] {row, col};
+        await Clients.Group(game.Id).RenderCursors(game.CursorPositions);
     }
 
     public async Task UpdateCell(int row, int col, char value)
@@ -91,6 +101,10 @@ public class CrosswordHub : Hub<ICrosswordClient>
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
+
+        // Remove player's cursor
+        game.CursorPositions.Remove(Context.ConnectionId);
+        await Clients.Group(game.Id).RenderCursors(game.CursorPositions);
 
         // Remove player from group (group is automatically deleted if it has no connections)
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, game.Id);
