@@ -6,10 +6,12 @@ public class Game
 {
     public string Id;
     public Crossword? ActiveCrossword;
+    public Dictionary<string, int[]> CursorPositions;
 
     public Game(string gameId, string crosswordDate)
     {
         this.Id = gameId;
+        this.CursorPositions = new Dictionary<string, int[]>();
         string? crosswordData = Game.GetCrosswordString(crosswordDate);
         Crossword? crossword = JsonSerializer.Deserialize<Crossword>(crosswordData);
 

@@ -65,7 +65,10 @@ function Cell(props) {
     classes += " active-cell";
   }
   if (props.errorCell) {
-    classes += " error-cell"
+    classes += " error-cell";
+  }
+  if (props.otherCursorCell) {
+    classes += " other-cursor-cell";
   }
 
   return (
@@ -93,6 +96,7 @@ function Grid(props) {
                   errorCell={props.errors[row][col]}
                   activeEntry={includesArray(props.activeEntry.cells, [row, col])}
                   activeCell={row === props.activeRow && col === props.activeCol}
+                  otherCursorCell={includesArray(props.otherCursorLocations, [row, col])}
                   annotation={props.startCells[[row, col]]}
                   onClick={() => props.onClick(row, col)}
                 />
@@ -162,6 +166,8 @@ export class Crossword extends React.Component {
 
     this.state = {
       hubConnection: null,
+      connectionId: null,
+      otherCursorLocations: [],
       loading: true,
       inProgress: false,
       complete: false,
@@ -199,11 +205,26 @@ export class Crossword extends React.Component {
     await this.openHubConnection();
     await this.loadCrossword();
     this.state.hubConnection.invoke('updateGrid');
+
+    let activeEntry = this.state.entries[this.state.activeEntryIndex];
+    const activeRow = activeEntry.cells[this.state.activeCellIndex][0];
+    const activeCol = activeEntry.cells[this.state.activeCellIndex][1];
+    this.state.hubConnection.invoke('updatePlayerCursor', activeRow, activeCol);
   }
 
   componentWillUnmount() {
     // Stop timer
     clearInterval(this.timerID);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Broadcast cursor location if changed
+    if (this.state.activeEntryIndex !== prevState.activeEntryIndex || this.state.activeCellIndex !== prevState.activeCellIndex) {
+      let activeEntry = this.state.entries[this.state.activeEntryIndex];
+      const activeRow = activeEntry.cells[this.state.activeCellIndex][0];
+      const activeCol = activeEntry.cells[this.state.activeCellIndex][1];
+      if (this.state.hubConnection) { this.state.hubConnection.invoke('updatePlayerCursor', activeRow, activeCol); }
+    }
   }
 
   async openHubConnection() {
@@ -224,8 +245,20 @@ export class Crossword extends React.Component {
       .catch(err => console.log("Error establishing connection"));
 
     this.setState({ hubConnection }, () => {
+      this.state.hubConnection.on('registerConnection', connectionId => {
+        this.setState({ connectionId: connectionId });
+      });
+
       this.state.hubConnection.on('updateUrl', gameId => {
         window.history.replaceState("", "", `${window.location.pathname}/${gameId}`);
+      });
+
+      this.state.hubConnection.on('renderCursors', cursorPositions => {
+        this.setState({
+          otherCursorLocations: Object.entries(cursorPositions)
+            .filter(([connectionId, position]) => connectionId !== this.state.connectionId)
+            .map(([connectionId, position]) => position)
+        });
       });
 
       this.state.hubConnection.on('renderGrid', (grid, errors) => {
@@ -496,6 +529,7 @@ export class Crossword extends React.Component {
               height={this.state.height}
               width={this.state.width}
               activeEntry={activeEntry}
+              otherCursorLocations={this.state.otherCursorLocations}
               onClick={this.goToCell}
               activeRow={activeEntry.cells[this.state.activeCellIndex][0]}
               activeCol={activeEntry.cells[this.state.activeCellIndex][1]}

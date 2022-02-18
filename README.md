@@ -17,7 +17,6 @@ This project is also an excuse for me to learn modern frameworks. The website us
     - Custom crossword clues
     - Themed clues
 - Multiplayer
-    - Indication of other players' cursors
     - Indication of how many players are connected
     - Modal on hub connection to share crossword link
 
