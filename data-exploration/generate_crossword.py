@@ -55,7 +55,7 @@ for row in df_clues.values:
     })
 # %%
 # Generate blacklist with recently used words
-blacklist_size = 500  # Number of recent words to ignore
+blacklist_size = 10000  # Number of recent words to ignore
 blacklist = set()
 xword_dir = r"../CrosswordWeb/Crosswords"
 for year in reversed(sorted(os.listdir(xword_dir))):
@@ -71,6 +71,6 @@ for year in reversed(sorted(os.listdir(xword_dir))):
 # Generate crossword
 start_time = time.time()
 crossword = Crossword("inputs/15x15-0.json", clues)
-crossword.generate("crosswords/crossword.json", blacklist)
+crossword.generate("crossword.json", blacklist)
 print(f"Crossword generated in {timedelta(seconds=int(time.time()-start_time))}")
 # %%
