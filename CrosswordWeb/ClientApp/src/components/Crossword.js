@@ -73,7 +73,9 @@ function Cell(props) {
 
   return (
     <td onClick={props.onClick}>
-      <span className="cell-annotation">{props.annotation}</span>
+      <div className="cell-annotation">
+        <span>{props.annotation}</span>
+      </div>
       <div className="unselectable-cell">
         <span className={classes}>{value}</span>
       </div>
