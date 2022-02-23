@@ -12,18 +12,11 @@ I started doing crosswords with a few of my friends near the beginning of the CO
 This project is also an excuse for me to learn modern frameworks. The website uses .NET Core and React while the crossword generator is written in Python.
 
 ## Features coming soon
-- Algorithm
-    - Difficulty adjustment
-    - Custom crossword clues
-    - Themed clues
-- Multiplayer
-    - Indication of how many players are connected
-    - Modal on hub connection to share crossword link
+- Indication of how many players are connected
+- Modal on new game to share crossword link
+- Custom/themed clues
+- Difficulty adjustment
+- Timer
 
 ## Known bugs
-- Mobile
-    - Inputs are discarded on Android when typing quickly
-    - Keyboard does not appear on load
-- Multiplayer
-    - Timers are inconsistent across users
-    - Expired sessions do not indicate that the connection has failed
+- Expired sessions do not indicate that the connection has failed
