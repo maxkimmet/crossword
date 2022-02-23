@@ -22,7 +22,11 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
     public async Task CreateGame(string crosswordDate)
     {
-        string gameId = Guid.NewGuid().ToString();  // TODO: Ensure ID is unique before creating game
+        // Create game with unique ID
+        string gameId;
+        do {
+            gameId = Guid.NewGuid().ToString();
+        } while (this._gameRepository.GameIdToGame.ContainsKey(gameId));
         Game game = new Game(gameId, crosswordDate);
 
         // Update dictionaries
