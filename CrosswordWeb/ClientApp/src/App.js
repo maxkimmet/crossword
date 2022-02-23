@@ -3,7 +3,6 @@ import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Crossword } from './components/Crossword'
-import { TicTacToe } from './components/TicTacToe'
 
 import './custom.css'
 
@@ -15,7 +14,6 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/crossword/:date/:gameId?' component={Crossword} />
-        <Route path='/tic-tac-toe' component={TicTacToe} />
       </Layout>
     );
   }
