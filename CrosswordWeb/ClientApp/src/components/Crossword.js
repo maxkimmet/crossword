@@ -8,6 +8,9 @@ function Header(props) {
       <h4>{props.title}</h4>
       <h6>by {props.author}</h6>
       <h6>{props.date}</h6>
+      <span>
+        Active players: {props.otherCursorLocations.length + 1}<br/>
+      </span>
     </div>
   );
 }
@@ -516,6 +519,7 @@ export class Crossword extends React.Component {
             title={this.state.title}
             author={this.state.author}
             date={this.state.date}
+            otherCursorLocations={this.state.otherCursorLocations}
           />
           {/* <Timer time={this.state.time} /> */}
           <HiddenInput
