@@ -12,11 +12,7 @@ I started doing crosswords with a few of my friends near the beginning of the CO
 This project is also an excuse for me to learn modern frameworks. The website uses .NET Core and React while the crossword generator is written in Python.
 
 ## Features coming soon
-- Indication of how many players are connected
 - Modal on new game to share crossword link
 - Custom/themed clues
-- Difficulty adjustment
+- Difficulty options
 - Timer
-
-## Known bugs
-- Expired sessions do not indicate that the connection has failed
