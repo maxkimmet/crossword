@@ -9,7 +9,7 @@ function Header(props) {
       <h6>by {props.author}</h6>
       <h6>{props.date}</h6>
       <span>
-        Active players: {props.otherCursorLocations.length + 1}<br/>
+        Active players: {props.otherCursorLocations.length + 1}<br />
       </span>
     </div>
   );
@@ -19,6 +19,18 @@ function Timer(props) {
   return (
     <div className="center">
       <span>{props.time.toISOString().substring(12, 19)}</span>
+    </div>
+  );
+}
+
+function GameNotFoundModal() {
+  return (
+    <div className="modalContainer">
+      <div className="modal">
+        <h2>Session invalid :(</h2>
+        <h6>Click the X to return home.</h6>
+        <button className="btn-close" onClick={() => { window.location.href = ""; }}></button>
+      </div>
     </div>
   );
 }
@@ -173,7 +185,6 @@ export class Crossword extends React.Component {
       hubConnection: null,
       connectionId: null,
       otherCursorLocations: [],
-      loading: true,
       inProgress: false,
       complete: false,
       showWinModal: false,
@@ -197,7 +208,7 @@ export class Crossword extends React.Component {
       errors: [[false, false, false, false, false, false, false]],
     }
 
-    this.toggleWinModal = this.toggleWinModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.runErrorCheck = this.runErrorCheck.bind(this);
     this.refocus = this.refocus.bind(this);
     this.goToEntry = this.goToEntry.bind(this);
@@ -208,9 +219,12 @@ export class Crossword extends React.Component {
 
   async componentDidMount() {
     await this.openHubConnection();
+
+    // Load crossword and update with shared grid
     await this.loadCrossword();
     this.state.hubConnection.invoke('updateGrid');
 
+    // Send player's cursor position to hub
     let activeEntry = this.state.entries[this.state.activeEntryIndex];
     const activeRow = activeEntry.cells[this.state.activeCellIndex][0];
     const activeCol = activeEntry.cells[this.state.activeCellIndex][1];
@@ -254,6 +268,15 @@ export class Crossword extends React.Component {
         this.setState({ connectionId: connectionId });
       });
 
+      this.state.hubConnection.on('failToConnect', () => {
+        // Show modal to return home
+        // Set game as complete to disable input
+        this.setState({
+          showGameNotFoundModal: true,
+          complete: true,
+        });
+      });
+
       this.state.hubConnection.on('updateUrl', gameId => {
         window.history.replaceState("", "", `${window.location.pathname}/${gameId}`);
       });
@@ -288,7 +311,6 @@ export class Crossword extends React.Component {
     ));
 
     this.setState({
-      loading: false,
       title: data.title,
       author: data.author,
       date: data.date,
@@ -315,9 +337,11 @@ export class Crossword extends React.Component {
     }));
   }
 
-  toggleWinModal() {
+  toggleModal(showModalVar) {
+    // let newState = {};
+    // newState[showModalVar] = !this.state[showModalVar];
     this.setState(prevState => ({
-      showWinModal: !prevState.showWinModal,
+      [showModalVar]: !prevState[showModalVar]
     }));
   }
 
@@ -508,10 +532,13 @@ export class Crossword extends React.Component {
 
     return (
       <div className="game-wrapper" onClick={() => this.refocus()}>
+        {this.state.showGameNotFoundModal &&
+          <GameNotFoundModal />
+        }
         {this.state.showWinModal &&
           <WinModal
             time={this.state.time}
-            onClick={this.toggleWinModal}
+            onClick={() => this.toggleModal("showWinModal")}
           />
         }
         <div className="flex-col">
