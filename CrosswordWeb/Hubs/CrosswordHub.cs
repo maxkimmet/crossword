@@ -6,6 +6,7 @@ namespace Crossword.Hubs;
 public interface ICrosswordClient
 {
     Task RegisterConnection(string connectionId);
+    Task FailToConnect();
     Task UpdateUrl(string gameId);
     Task RenderCursors(Dictionary<string, int[]> cursorPositions);
     Task RenderGrid(char[][] grid, bool[][] errors);
@@ -24,7 +25,8 @@ public class CrosswordHub : Hub<ICrosswordClient>
     {
         // Create game with unique ID
         string gameId;
-        do {
+        do
+        {
             gameId = Guid.NewGuid().ToString();
         } while (this._gameRepository.GameIdToGame.ContainsKey(gameId));
         Game game = new Game(gameId, crosswordDate);
@@ -46,9 +48,15 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
     public async Task JoinGame(string gameId)
     {
-        Game game = this._gameRepository.GameIdToGame[gameId];
+        // Return if game doesn't exist
+        if (!this._gameRepository.GameIdToGame.ContainsKey(gameId))
+        {
+            await Clients.Client(Context.ConnectionId).FailToConnect();
+            return;
+        }
 
         // Update dictionaries
+        Game game = this._gameRepository.GameIdToGame[gameId];
         this._gameRepository.ConnectionToGame[Context.ConnectionId] = game;
         this._gameRepository.GameIdToConnections[game.Id].Add(Context.ConnectionId);
 
@@ -59,14 +67,25 @@ public class CrosswordHub : Hub<ICrosswordClient>
         await Clients.Client(Context.ConnectionId).RegisterConnection(Context.ConnectionId);
     }
 
-    public async Task UpdatePlayerCursor(int row, int col) {
+    public async Task UpdatePlayerCursor(int row, int col)
+    {
+        // Return if connection isn't in valid game
+        if (!this._gameRepository.ConnectionToGame.ContainsKey(Context.ConnectionId))
+            return;
+
+        // Update cursor position and send to all clients in same game
         Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
-        game.CursorPositions[Context.ConnectionId] = new int[] {row, col};
+        game.CursorPositions[Context.ConnectionId] = new int[] { row, col };
         await Clients.Group(game.Id).RenderCursors(game.CursorPositions);
     }
 
     public async Task UpdateCell(int row, int col, char value)
     {
+        // Return if connection isn't in valid game
+        if (!this._gameRepository.ConnectionToGame.ContainsKey(Context.ConnectionId))
+            return;
+
+        // Update cell in grid, reset its error, then send to all to clients in same game
         Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
         if (game.ActiveCrossword != null)
         {
@@ -78,6 +97,11 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
     public async Task UpdateGrid()
     {
+        // Return if connection isn't in valid game
+        if (!this._gameRepository.ConnectionToGame.ContainsKey(Context.ConnectionId))
+            return;
+
+        // Send grid and errors to all clients in same game
         Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
         Crossword.Models.Crossword crossword = game.ActiveCrossword!;
         await Clients.Group(game.Id).RenderGrid(crossword.grid!, crossword.errors!);
@@ -85,6 +109,11 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
     public async Task UpdateErrors()
     {
+        // Return if connection isn't in valid game
+        if (!this._gameRepository.ConnectionToGame.ContainsKey(Context.ConnectionId))
+            return;
+
+        // Check for errors and send to all clients in same game
         Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
         Crossword.Models.Crossword crossword = game.ActiveCrossword!;
         for (int i = 0; i < crossword.grid!.Length; i++)
@@ -104,6 +133,10 @@ public class CrosswordHub : Hub<ICrosswordClient>
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
+        // Return if connection isn't in valid game
+        if (!this._gameRepository.ConnectionToGame.ContainsKey(Context.ConnectionId))
+            return;
+
         Game game = this._gameRepository.ConnectionToGame[Context.ConnectionId];
 
         // Remove player's cursor

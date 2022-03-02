@@ -8,6 +8,9 @@ function Header(props) {
       <h4>{props.title}</h4>
       <h6>by {props.author}</h6>
       <h6>{props.date}</h6>
+      <span>
+        Active players: {props.otherCursorLocations.length + 1}<br />
+      </span>
     </div>
   );
 }
@@ -16,6 +19,74 @@ function Timer(props) {
   return (
     <div className="center">
       <span>{props.time.toISOString().substring(12, 19)}</span>
+    </div>
+  );
+}
+
+class ShareModal extends React.Component {
+  static displayName = ShareModal.name;
+
+  constructor(props) {
+    super(props);
+    this.onCloseClick = props.onClick;
+    this.urlRef = React.createRef();
+
+    this.state = {
+      buttonText: "Copy",
+    }
+
+    this.onButtonClick = this.onButtonClick.bind(this);
+  }
+
+  onButtonClick() {
+    navigator.clipboard.writeText(this.urlRef.current.value);
+    this.setState({
+      buttonText: "Copied!",
+    });
+  }
+
+  render() {
+    return (
+      <div className="modalContainer">
+        <div className="modal" id="copy-modal">
+          <h5>Share the link to get the party started!</h5>
+          <button className="btn-close" onClick={this.onCloseClick}></button>
+          <form>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                value={window.location.href}
+                ref={this.urlRef}
+                readOnly
+              />
+              <span className="input-group-btn">
+                <button
+                  type="button"
+                  className="btn btn-default"
+                  id="copy-url-btn"
+                  title="Copy to clipboard"
+                  onClick={this.onButtonClick}
+                >
+                  {this.state.buttonText}
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
+
+function GameNotFoundModal() {
+  return (
+    <div className="modalContainer">
+      <div className="modal">
+        <h2>Session invalid :(</h2>
+        <h6>Click the X to return home.</h6>
+        <button className="btn-close" onClick={() => { window.location.href = ""; }}></button>
+      </div>
     </div>
   );
 }
@@ -170,10 +241,10 @@ export class Crossword extends React.Component {
       hubConnection: null,
       connectionId: null,
       otherCursorLocations: [],
-      loading: true,
       inProgress: false,
       complete: false,
       showWinModal: false,
+      showShareModal: false,
       time: new Date(0),
       title: "Loading...",
       author: "Loading...",
@@ -194,7 +265,7 @@ export class Crossword extends React.Component {
       errors: [[false, false, false, false, false, false, false]],
     }
 
-    this.toggleWinModal = this.toggleWinModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.runErrorCheck = this.runErrorCheck.bind(this);
     this.refocus = this.refocus.bind(this);
     this.goToEntry = this.goToEntry.bind(this);
@@ -205,9 +276,12 @@ export class Crossword extends React.Component {
 
   async componentDidMount() {
     await this.openHubConnection();
+
+    // Load crossword and update with shared grid
     await this.loadCrossword();
     this.state.hubConnection.invoke('updateGrid');
 
+    // Send player's cursor position to hub
     let activeEntry = this.state.entries[this.state.activeEntryIndex];
     const activeRow = activeEntry.cells[this.state.activeCellIndex][0];
     const activeCol = activeEntry.cells[this.state.activeCellIndex][1];
@@ -242,6 +316,7 @@ export class Crossword extends React.Component {
           hubConnection.invoke('joinGame', gameId);
         } else {
           hubConnection.invoke('createGame', date);
+          this.setState({ showShareModal: true });
         }
       })
       .catch(err => console.log("Error establishing connection"));
@@ -249,6 +324,15 @@ export class Crossword extends React.Component {
     this.setState({ hubConnection }, () => {
       this.state.hubConnection.on('registerConnection', connectionId => {
         this.setState({ connectionId: connectionId });
+      });
+
+      this.state.hubConnection.on('failToConnect', () => {
+        // Show modal to return home
+        // Set game as complete to disable input
+        this.setState({
+          showGameNotFoundModal: true,
+          complete: true,
+        });
       });
 
       this.state.hubConnection.on('updateUrl', gameId => {
@@ -285,7 +369,6 @@ export class Crossword extends React.Component {
     ));
 
     this.setState({
-      loading: false,
       title: data.title,
       author: data.author,
       date: data.date,
@@ -312,9 +395,11 @@ export class Crossword extends React.Component {
     }));
   }
 
-  toggleWinModal() {
+  toggleModal(showModalVar) {
+    // let newState = {};
+    // newState[showModalVar] = !this.state[showModalVar];
     this.setState(prevState => ({
-      showWinModal: !prevState.showWinModal,
+      [showModalVar]: !prevState[showModalVar]
     }));
   }
 
@@ -505,10 +590,18 @@ export class Crossword extends React.Component {
 
     return (
       <div className="game-wrapper" onClick={() => this.refocus()}>
+        {this.state.showGameNotFoundModal &&
+          <GameNotFoundModal />
+        }
+        {this.state.showShareModal &&
+          <ShareModal
+            onClick={() => this.toggleModal("showShareModal")}
+          />
+        }
         {this.state.showWinModal &&
           <WinModal
             time={this.state.time}
-            onClick={this.toggleWinModal}
+            onClick={() => this.toggleModal("showWinModal")}
           />
         }
         <div className="flex-col">
@@ -516,6 +609,7 @@ export class Crossword extends React.Component {
             title={this.state.title}
             author={this.state.author}
             date={this.state.date}
+            otherCursorLocations={this.state.otherCursorLocations}
           />
           {/* <Timer time={this.state.time} /> */}
           <HiddenInput
