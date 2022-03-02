@@ -9,4 +9,4 @@ I started doing crosswords with a few of my friends near the beginning of the CO
 - American style, densely packed 15x15 crosswords where all letters are part of both a horizontal and vertical clue
 - Mobile support
 
-This project is also an excuse for me to learn .NET Core and React. The crossword algorithm is written in Python.
+This project is also an excuse for me to learn .NET Core and React. The crossword generator is written in Python.
