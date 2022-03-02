@@ -23,6 +23,62 @@ function Timer(props) {
   );
 }
 
+class ShareModal extends React.Component {
+  static displayName = ShareModal.name;
+
+  constructor(props) {
+    super(props);
+    this.onCloseClick = props.onClick;
+    this.urlRef = React.createRef();
+
+    this.state = {
+      buttonText: "Copy",
+    }
+
+    this.onButtonClick = this.onButtonClick.bind(this);
+  }
+
+  onButtonClick() {
+    navigator.clipboard.writeText(this.urlRef.current.value);
+    this.setState({
+      buttonText: "Copied!",
+    });
+  }
+
+  render() {
+    return (
+      <div className="modalContainer">
+        <div className="modal" id="copy-modal">
+          <h5>Share the link to get the party started!</h5>
+          <button className="btn-close" onClick={this.onCloseClick}></button>
+          <form>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                value={window.location.href}
+                ref={this.urlRef}
+                readOnly
+              />
+              <span className="input-group-btn">
+                <button
+                  type="button"
+                  className="btn btn-default"
+                  id="copy-url-btn"
+                  title="Copy to clipboard"
+                  onClick={this.onButtonClick}
+                >
+                  {this.state.buttonText}
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
+
 function GameNotFoundModal() {
   return (
     <div className="modalContainer">
@@ -188,6 +244,7 @@ export class Crossword extends React.Component {
       inProgress: false,
       complete: false,
       showWinModal: false,
+      showShareModal: false,
       time: new Date(0),
       title: "Loading...",
       author: "Loading...",
@@ -259,6 +316,7 @@ export class Crossword extends React.Component {
           hubConnection.invoke('joinGame', gameId);
         } else {
           hubConnection.invoke('createGame', date);
+          this.setState({ showShareModal: true });
         }
       })
       .catch(err => console.log("Error establishing connection"));
@@ -534,6 +592,11 @@ export class Crossword extends React.Component {
       <div className="game-wrapper" onClick={() => this.refocus()}>
         {this.state.showGameNotFoundModal &&
           <GameNotFoundModal />
+        }
+        {this.state.showShareModal &&
+          <ShareModal
+            onClick={() => this.toggleModal("showShareModal")}
+          />
         }
         {this.state.showWinModal &&
           <WinModal
