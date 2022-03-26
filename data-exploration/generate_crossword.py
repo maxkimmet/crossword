@@ -40,19 +40,26 @@ df_clues.drop('index', axis=1, inplace=True)
 df_clues = df_clues.groupby('answer') \
     .agg(
         clue=('clue', 'first'),
-        answer_count=('clue_count', 'sum')
+        answer_count=('clue_count', 'sum'),
+        answer_length=('answer_length', 'first')
     ) \
     .reset_index() \
     .sort_values('answer_count', ascending=False) \
     .reset_index()
-df_clues = df_clues[['answer', 'clue']]
+# %%
+# Filter to most common answers of each length
 clues = []
-for row in df_clues.values:
-    clues.append({
-        'answer': row[0],
-        'clue': row[1],
-        'priority': 1
-    })
+for length in df_clues.answer_length.unique():
+    df_filtered = df_clues[df_clues.answer_length == length]
+    df_filtered = df_filtered.sort_values('answer_count', ascending=False)
+    df_filtered = df_filtered.head(int(len(df_filtered) * 0.1))
+    df_filtered = df_filtered[['answer', 'clue']]
+    for row in df_filtered.values:
+        clues.append({
+            'answer': row[0],
+            'clue': row[1],
+            'priority': 1
+        })
 # %%
 # Generate blacklist with recently used words
 blacklist_size = 10000  # Number of recent words to ignore
