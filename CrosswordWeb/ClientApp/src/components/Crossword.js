@@ -507,18 +507,21 @@ export class Crossword extends React.Component {
 
     // Handle keypresses
     if (value.match(/^[A-Z]$/)) {
-      // Enter alphabetic character and move to next cell (return if puzzle complete)
-      if (!this.state.inProgress) {  // Start timer when first character entered
+      // Start timer when first character entered
+      if (!this.state.inProgress) {
         this.setState({ inProgress: true });
         this.timerID = setInterval(
           () => this.tick(),
           1000
         );
       }
-      if (!this.state.complete) {
-        grid[activeRow][activeCol] = value;
-        errors[activeRow][activeCol] = false;
+      // Return if puzzle is complete
+      if (this.state.complete) {
+        return;
       }
+      // Enter alphabetic character and move to next cell
+      grid[activeRow][activeCol] = value;
+      errors[activeRow][activeCol] = false;
       let nextCellIndex = activeCellIndex + 1;
       if (nextCellIndex < activeEntry.cells.length) {
         activeCellIndex = nextCellIndex;
